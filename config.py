@@ -15,3 +15,9 @@ class Config(object):
         'db': 'test',
         'host': '127.0.0.1',
     }
+
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    PICTURES_DIR = os.path.join(BASE_DIR, 'pictures/')
+    UPLOAD_FOLDER = 'pictures'
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+    MAX_CONTENT_LENGTH = 16*1024*1024

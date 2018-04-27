@@ -1,8 +1,9 @@
 from flask import Flask
 from config import Config
 from flask_bootstrap import Bootstrap
-import mongoengine
+# import mongoengine
 from flask_mongoengine import MongoEngine, MongoEngineSessionInterface
+from flask_login import LoginManager
 
 
 app = Flask(__name__)
@@ -14,6 +15,8 @@ app.config.from_object(Config)
 # print("mongodb closed!")
 db = MongoEngine(app)
 app.session_interface = MongoEngineSessionInterface(db)
+
+login = LoginManager(app)
 
 bootstap = Bootstrap(app)
 
