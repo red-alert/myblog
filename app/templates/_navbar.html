@@ -1,0 +1,45 @@
+<div class="navbar-wrapper">
+    <div class="container">
+
+        <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">旧时光</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="{{ url_for('index') }}">首页</a></li>
+                        <li><a href="#about">关于</a></li>
+                        <li><a href="#contact">联系</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理 <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {% if current_user.is_anonymous %}
+                                <li><a href="{{ url_for('login') }}">Login</a></li>
+                                {% else %}
+                                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                                {% endif %}
+{#
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header">管理</li>
+                                {% if current_user.is_anonymous %}
+                                <li><a href="{{ url_for('login') }}">Login</a></li>
+                                {% else %}
+                                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                                {% endif %}
+#}
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </div>
+</div>

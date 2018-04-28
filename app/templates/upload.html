@@ -1,4 +1,12 @@
-{% extends base.html %}
+{% extends "base.html" %}
 
 {% block app_content %}
+    <h1>Upload new picture</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                {{ wtf.quick_form(form) }}
+            </div>
+        </div>
+    </div
 {% endblock %}
