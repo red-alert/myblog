@@ -14,7 +14,7 @@ app.config.from_object(Config)
 # db.close()
 # print("mongodb closed!")
 db = MongoEngine(app)
-app.session_interface = MongoEngineSessionInterface(db)
+# app.session_interface = MongoEngineSessionInterface(db)
 
 login = LoginManager(app)
 

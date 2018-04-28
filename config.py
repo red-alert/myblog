@@ -12,12 +12,12 @@ class Config(object):
     # MONGODB_DATABASE_HOST = 'mongodb://%s' % MONGODB_HOST
 
     MONGODB_SETTINGS = {
-        'db': 'test',
+        'db': 'myblog',
         'host': '127.0.0.1',
     }
 
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    PICTURES_DIR = os.path.join(BASE_DIR, 'pictures/')
+    PICTURES_DIR = os.path.join(BASE_DIR, 'app\\pictures\\')
     UPLOAD_FOLDER = 'pictures'
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
     MAX_CONTENT_LENGTH = 16*1024*1024

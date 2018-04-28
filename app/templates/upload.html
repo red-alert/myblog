@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
     <h1>Upload new picture</h1>
@@ -8,5 +9,5 @@
                 {{ wtf.quick_form(form) }}
             </div>
         </div>
-    </div
+    </div>
 {% endblock %}

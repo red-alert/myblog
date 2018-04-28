@@ -10,7 +10,7 @@ class Picture(db.Document):
     shot_time = db.DateTimeField()
     create_time = db.DateTimeField(default=datetime.utcnow())
     place = db.StringField(max_length=20)
-    tags = db.ListField(db.StringField(max_length=60))
+    tags = db.StringField(max_length=60)
     direction = db.StringField(max_length=10)
 
     def __repr__(self):
@@ -30,5 +30,6 @@ class User(UserMixin, db.Document):
         return check_password_hash(self.password_hash, password)
 
 @login.user_loader
-def load_user(username):
-    return User.objects(username=username).first()
+def load_user(user_id):
+    user = User.objects(id=user_id)[0]
+    return user
