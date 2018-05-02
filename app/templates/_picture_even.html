@@ -1,10 +1,11 @@
 <div class="row featurette">
   <div class="col-md-7">
-    <h2 class="featurette-heading">{{ picture.place }} <span class="text-muted">{{ picture.shot_time }}</span></h2>
+    <h2 class="featurette-heading">{{ picture.place }}</h2>
+    <h4><span class="text-muted">{{ picture.shot_time }}</span></h4>
     <p class="lead">{{ picture.description }}</p>
   </div>
   <div class="col-md-5">
-    <img class="featurette-image img-responsive center-block" data-src="static/pictures/{{ picture.filename }}" alt="Generic placeholder image">
+    <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" src="../pictures/{{ picture.filename }}" alt="Generic placeholder image">
   </div>
 </div>
 

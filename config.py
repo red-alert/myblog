@@ -17,7 +17,11 @@ class Config(object):
     }
 
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    PICTURES_DIR = os.path.join(BASE_DIR, 'app\\pictures\\')
-    UPLOAD_FOLDER = 'pictures'
+    APP_DIR = os.path.dirname(os.path.abspath(__file__))
+
+    PICTURES_DIR = os.path.join(APP_DIR, 'pictures')
+
+    UPLOAD_FOLDER = 'app/pictures'
+
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
     MAX_CONTENT_LENGTH = 16*1024*1024

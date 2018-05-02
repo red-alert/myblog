@@ -54,17 +54,14 @@
 
 
 <!-- START THE FEATURETTES -->
-
+<div class="container">
 <hr class="featurette-divider">
 
-{% for picture in picutres %}
-    {% if loop.cycle('odd', 'even') == 'odd' %}
-        {% include '_picture_odd.html' %}
-    {% else %}
-        {% include '_picuter_even.html' %}
-    {% endif %}
+{% for picture in pictures %}
+{% set looper = loop.cycle('odd', 'even') %}
+        {% include '_picture_%s.html' % looper %}
 {% endfor %}
-
+</div>
 <!-- /END THE FEATURETTES -->
 
 

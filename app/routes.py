@@ -4,6 +4,7 @@ from app import db
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for
 from flask import request
+from flask import send_from_directory
 from app.models import Picture, User
 from app.forms import LoginForm, PictureForm, RegistrationForm
 
@@ -16,7 +17,7 @@ from werkzeug.urls import url_parse
 @app.route('/index')
 def index():
     pictures = Picture.objects()
-    context = {}
+    print(pictures)
     return render_template('index.html', pictures=pictures)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -56,6 +57,9 @@ def register():
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
+@app.route('/pictures/<filename>')
+def server_pictures(filename):
+    return send_from_directory(os.path.join(app.config['APP_DIR'], app.config['UPLOAD_FOLDER']), filename)
 
 @app.route('/upload', methods=['GET', 'POST'])
 @login_required
@@ -74,9 +78,10 @@ def upload():
             picture = Picture(filename=filename, description=form.description.data, shot_time=form.shot_time.data, place=form.place.data, tags=form.tags.data, direction=form.direction.data)
             picture.save()
             f= form.file.data
-            f.save(os.path.join(app.config['PICTURES_DIR'], filename))
+            print(f)
+            f.save(os.path.join(app.config['APP_DIR'], app.config['UPLOAD_FOLDER'], filename))
             flash('Newpicture uploaded!')
-            return redirect(rul_for('upload', filename=filename))
+            return redirect(url_for('upload', filename=filename))
     return render_template('upload.html', title='Upload', form=form)
 
 def allowed_file(filename):
