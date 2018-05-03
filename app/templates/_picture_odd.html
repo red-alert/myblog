@@ -1,8 +1,8 @@
 <div class="row featurette">
   <div class="col-md-7 col-md-push-5">
-    <h2 class="featurette-heading">{{ picture.place }}</h2>
-    <h4><span class="text-muted">{{ picture.shot_time }}</span></h4>
-    <p class="lead">{{ picture.description }}</p>
+    <h2 class="featurette-heading fzfs">{{ picture.place }}</h2>
+    <h4><span class="text-muted fzfs">{{ picture.shot_time.strftime('%Y-%m-%d') }}</span></h4>
+    <p class="lead fzfs">{{ picture.description }}</p>
   </div>
   <div class="col-md-5 col-md-pull-7">
     <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" src="../pictures/{{ picture.filename }}" alt="Generic placeholder image">

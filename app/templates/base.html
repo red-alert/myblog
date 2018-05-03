@@ -26,5 +26,14 @@
         </div>
     {% endif %}
     {% endwith %}
-{% block app_content %}{% endblock %}
+
+{% block app_content %}
+{% endblock %}
+
+<div class="container">
+{% block footer %}
+{% include '_footer.html' %}
+{% endblock %}
+</div>
+
 {% endblock %}

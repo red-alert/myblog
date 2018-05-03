@@ -17,8 +17,9 @@ from werkzeug.urls import url_parse
 @app.route('/index')
 def index():
     pictures = Picture.objects()
+    carousel_picutres = pictures.order_by('-create_time')[:3]
     print(pictures)
-    return render_template('index.html', pictures=pictures)
+    return render_template('index.html', pictures=pictures, carousel_pictures=carousel_picutres)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
