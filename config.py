@@ -14,6 +14,9 @@ class Config(object):
     MONGODB_SETTINGS = {
         'db': 'myblog',
         'host': '127.0.0.1',
+        'username': 'myblog',
+        'password': '@jX8FFkK-ZJ-mDgC8H*hFIN.Y(lf@7mA'
+
     }
 
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
