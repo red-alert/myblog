@@ -4,7 +4,7 @@ from flask_bootstrap import Bootstrap
 # import mongoengine
 from flask_mongoengine import MongoEngine, MongoEngineSessionInterface
 from flask_login import LoginManager
-
+from flask_cache import Cache
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -19,5 +19,8 @@ db = MongoEngine(app)
 login = LoginManager(app)
 
 bootstap = Bootstrap(app)
+
+cache = Cache(config={'CACHE_TYPE': 'simple'})
+cache.init_app(app)
 
 from app import routes

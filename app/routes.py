@@ -10,11 +10,14 @@ from app.forms import LoginForm, PictureForm, RegistrationForm
 
 from flask_login import current_user, login_user, login_required, logout_user
 
+from app import cache
+
 from werkzeug.utils import secure_filename
 from werkzeug.urls import url_parse
 
 @app.route('/')
 @app.route('/index')
+@cache.cached(timeout=300)
 def index():
     pictures = Picture.objects()
     carousel_picutres = pictures.order_by('-create_time')[:3]
@@ -76,7 +79,7 @@ def upload():
             return redirect(url_for('upload'))
         if form.file and allowed_file(form.file.data.filename):
             filename = secure_filename(form.file.data.filename)
-            picture = Picture(filename=filename, description=form.description.data, shot_time=form.shot_time.data, place=form.place.data, tags=form.tags.data, direction=form.direction.data)
+            picture = Picture(filename=filename, description=form.description.data, shot_time=form.shot_time.data, place=form.place.data, tags=form.tags.data)
             picture.save()
             f= form.file.data
             print(f)

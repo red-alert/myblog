@@ -9,9 +9,9 @@ class Picture(db.Document):
     description = db.StringField(max_length=255)
     shot_time = db.DateTimeField()
     create_time = db.DateTimeField(default=datetime.utcnow())
-    place = db.StringField(max_length=20)
+    place = db.StringField(max_length=255)
     tags = db.StringField(max_length=60)
-    direction = db.StringField(max_length=10)
+    # direction = db.StringField(max_length=10)
 
     def __repr__(self):
         return '<Picture {}>'.format(self.filename)

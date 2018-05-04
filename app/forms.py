@@ -15,8 +15,8 @@ class PictureForm(FlaskForm):
     description = TextAreaField('description', validators=[Length(min=0, max=255)])
     shot_time = DateField('shot time', validators=[])
     place = StringField('place', validators=[])
-    tags = SelectField(choices=[('mountain', '高山'), ('water', '流水'), ('things', '万物'), ('people', '人间'), ('me', '我')], validators=[DataRequired()])
-    direction = RadioField(choices=[('vertical', 'Vertical'), ('horizontal', 'Horizontal')], validators=[DataRequired()])
+    tags = SelectField(choices=[('none', 'None'), ('mountain', '高山'), ('water', '流水'), ('things', '万物'), ('people', '人间'), ('me', '我')], validators=[DataRequired()])
+    # direction = RadioField(choices=[('vertical', 'Vertical'), ('horizontal', 'Horizontal')], validators=[DataRequired()])
     file = FileField('File', validators=[FileRequired(), FileAllowed(app.config['ALLOWED_EXTENSIONS'])])
     submit = SubmitField('Upload')
 
