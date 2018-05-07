@@ -6,7 +6,7 @@ from flask_mongoengine import MongoEngine, MongoEngineSessionInterface
 from flask_login import LoginManager
 from flask_cache import Cache
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config.from_object(Config)
 # db = mongoengine.connect(app.config['MONGODB_NAME'], host=app.config['MONGODB_HOST'])
 # db = mongoengine.connect('test', host='127.0.0.1')
