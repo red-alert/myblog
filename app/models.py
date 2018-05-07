@@ -5,16 +5,18 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
 class Picture(db.Document):
-    filename = db.StringField(max_length=60)
+    extension = db.StringField(max_length=4)
     description = db.StringField(max_length=255)
     shot_time = db.DateTimeField()
     create_time = db.DateTimeField(default=datetime.utcnow())
     place = db.StringField(max_length=255)
     tags = db.StringField(max_length=60)
+
+    # filename = db.StringField(max_length=60)
     # direction = db.StringField(max_length=10)
 
     def __repr__(self):
-        return '<Picture {}>'.format(self.filename)
+        return '<Picture {}>'.format(self.id)
 
 class User(UserMixin, db.Document):
     username = db.StringField(max_length=60)
