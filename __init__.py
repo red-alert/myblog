@@ -1,1 +1,0 @@
-from myblog import myblog
