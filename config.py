@@ -22,6 +22,7 @@ class Config(object):
     PICTURES_DIR = os.path.join(APP_DIR, 'pictures')
 
     UPLOAD_FOLDER = 'app/pictures'
+    STATIC = 'app/static'
 
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
     MAX_CONTENT_LENGTH = 16*1024*1024

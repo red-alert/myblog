@@ -62,8 +62,12 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 @app.route('/pictures/<filename>')
-def server_pictures(filename):
+def serve_pictures(filename):
     return send_from_directory(os.path.join(app.config['APP_DIR'], app.config['UPLOAD_FOLDER']), filename)
+
+@app.route('/static/<filename>')
+def serve_static_files(filename):
+    return send_from_directory(os.path.join(app.config['APP_DIR'], app.config['STATIC']), filename)
 
 @app.route('/upload', methods=['GET', 'POST'])
 @login_required
