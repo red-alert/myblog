@@ -12,7 +12,7 @@ from app import cache
 from werkzeug.utils import secure_filename
 from werkzeug.urls import url_parse
 from PIL import Image
-
+from collections import defaultdict
 
 @app.route('/')
 @app.route('/index')
@@ -27,6 +27,17 @@ def about():
     pictures = Picture.objects()
     carousel_pictures = pictures.order_by('-create_time')[:3]
     return render_template('about.html', carousel_pictures=carousel_pictures)
+
+@app.route('/pictures_by_year')
+def pictures_by_year():
+    pictures = Picture.objects().order_by('-shot_time')
+    year = 0
+    pictures_by_year = defaultdict(list)
+    for picture in pictures:
+        year = picture.shot_time.year
+        print(year)
+        pictures_by_year[year].append(picture)
+    return render_template('pictures_by_year.html', pictures_by_year=pictures_by_year)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

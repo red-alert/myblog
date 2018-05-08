@@ -1,6 +1,10 @@
 {% extends 'bootstrap/base.html' %}
 {% block title %}
-    {% if title %}{{ title }}{% endif %}
+    {% if title %}
+    {{ title }}
+    {% else %}
+    有龙则灵
+    {% endif %}
 {% endblock %}
 
 {% block styles %}
@@ -8,9 +12,7 @@
     <link href="static/carousel.css" rel="stylesheet">
 {% endblock %}
 
-{% block scripts %}
-    {{ super () }}
-{% endblock %}
+
 
 {% block navbar %}
 {% include "_navbar.html" %}
@@ -27,13 +29,17 @@
     {% endif %}
     {% endwith %}
 
-{% block app_content %}
+    {% block app_content %}
+    {% endblock %}
+
+    <div class="footer navbar">
+    {% block footer %}
+    {% include '_footer.html' %}
+    {% endblock %}
+    </div>
+
 {% endblock %}
 
-<div class="footer navbar">
-{% block footer %}
-{% include '_footer.html' %}
-{% endblock %}
-</div>
-
+{% block scripts %}
+    {{ super () }}
 {% endblock %}
