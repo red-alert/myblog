@@ -16,28 +16,40 @@ from collections import defaultdict
 
 @app.route('/')
 @app.route('/index')
-@cache.cached(timeout=5)
 def index():
     pictures = Picture.objects().order_by('-shot_time')
-    carousel_pictures = pictures.order_by('-create_time')[:3]
-    return render_template('index.html', pictures=pictures, carousel_pictures=carousel_pictures)
+    carousel_pictures = pictures.order_by('-create_time')[:5]
+    page = request.args.get('page', 1, type=int)
+    paginated_pictures = pictures.paginate(page=page, per_page=app.config['PIC_PER_PAGE'])
+    current_page = paginated_pictures.page
+    total_page = paginated_pictures.pages
+    print(total_page)
+    next_url = url_for('index', page=paginated_pictures.next_num) if paginated_pictures.has_next else None
+    prev_url = url_for('index', page=paginated_pictures.prev_num) if paginated_pictures.has_prev else None
+    url_list = []
+    for p in range(1, total_page+1):
+        url = url_for('index', page=p)
+        url_list.append(url)
+    return render_template('index.html', pictures=paginated_pictures.items, next_url=next_url, prev_url=prev_url, carousel_pictures=carousel_pictures, current_page=current_page, total_page=total_page, url_list=url_list)
 
 @app.route('/about')
 def about():
     pictures = Picture.objects()
-    carousel_pictures = pictures.order_by('-create_time')[:3]
+    carousel_pictures = pictures.order_by('-create_time')[:5]
     return render_template('about.html', carousel_pictures=carousel_pictures)
 
 @app.route('/pictures_by_year')
 def pictures_by_year():
     pictures = Picture.objects().order_by('-shot_time')
     year = 0
+    years = []
     pictures_by_year = defaultdict(list)
     for picture in pictures:
         year = picture.shot_time.year
-        print(year)
+        if year not in years:
+            years.append(year)
         pictures_by_year[year].append(picture)
-    return render_template('pictures_by_year.html', pictures_by_year=pictures_by_year)
+    return render_template('pictures_by_year.html', pictures_by_year=pictures_by_year, years=years)
 
 @app.route('/pictures_by_tag/<tag>')
 def pictures_by_tag(tag):
@@ -78,7 +90,7 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirct(url_for('index'))
+        return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data)

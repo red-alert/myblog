@@ -12,13 +12,18 @@
     <link href="../static/carousel.css" rel="stylesheet">
 {% endblock %}
 
-
+{% block scripts %}
+    {{ super () }}
+{% endblock %}
 
 {% block navbar %}
-{% include "_navbar.html" %}
+    {% include "_navbar.html" %}
 {% endblock %}
 
 {% block content %}
+    {% block app_content %}
+    {% endblock %}
+
     {% with messages = get_flashed_messages() %}
     {% if messages %}
         <div class="container alert">
@@ -29,17 +34,7 @@
     {% endif %}
     {% endwith %}
 
-    {% block app_content %}
-    {% endblock %}
-
-    <div class="footer navbar">
     {% block footer %}
     {% include '_footer.html' %}
     {% endblock %}
-    </div>
-
-{% endblock %}
-
-{% block scripts %}
-    {{ super () }}
 {% endblock %}

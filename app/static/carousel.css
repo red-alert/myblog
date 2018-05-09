@@ -3,7 +3,8 @@
 /* Padding below the footer and lighter body text */
 
 body {
-  padding-bottom: 0px;
+  min-height: 100%;
+  padding-bottom: 10px;
   color: #5a5a5a;
 }
 
