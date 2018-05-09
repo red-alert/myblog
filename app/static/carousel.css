@@ -76,8 +76,9 @@ body {
 }
 
 .by-year-img {
-  height:200px;
+  height:auto;
   width:200px;
+  max-width:100%;
   margin: 10px 10px;
 }
 
