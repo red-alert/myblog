@@ -39,6 +39,18 @@ def pictures_by_year():
         pictures_by_year[year].append(picture)
     return render_template('pictures_by_year.html', pictures_by_year=pictures_by_year)
 
+@app.route('/pictures_by_tag/<tag>')
+def pictures_by_tag(tag):
+    pictures = Picture.objects(tags=tag).order_by('-shot_time')
+    tag_dict = {
+    'mountain': '高山',
+    'water': '流水',
+    'things': '万物',
+    'people': '人间',
+    'me': '我',
+    }
+    return render_template('pictures_by_tag.html', pictures=pictures, tag=tag, tag_dict=tag_dict)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:

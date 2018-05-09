@@ -22,11 +22,11 @@
                                 <li><a href="{{ url_for('pictures_by_year') }}">按时间</a></li>
                                 <li role="seperator" class="divider"></li>
                                 <li class="dropdown-header">按类型</li>
-                                <li><a href="#高山">高山</a></li>
-                                <li><a href="#流水">流水</a></li>
-                                <li><a href="#万物">万物</a></li>
-                                <li><a href="#人间">人间</a></li>
-                                <li><a href="#我">我</a></li>
+                                <li><a href="{{ url_for('pictures_by_tag', tag='mountain') }}">高山</a></li>
+                                <li><a href="{{ url_for('pictures_by_tag', tag='water') }}">流水</a></li>
+                                <li><a href="{{ url_for('pictures_by_tag', tag='things') }}">万物</a></li>
+                                <li><a href="{{ url_for('pictures_by_tag', tag='people') }}">人间</a></li>
+                                <li><a href="{{ url_for('pictures_by_tag', tag='me') }}">我</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
