@@ -78,9 +78,9 @@ body {
 
 .by-year-img {
   height:auto;
-  width:150px;
+  width:100px;
   max-width:100%;
-  margin: 10px 10px;
+  margin: 5px 5px;
 }
 
 
@@ -106,15 +106,15 @@ body {
 
 /* Fonts
 ------------------------- */
-@font-face {
+/* @font-face {
   font-family: FZFS;
   src: url( 'FZFSJW.TTF' );
 }
 
 .fzfs
   {
-    /* font-family: FZFS; */
-  }
+    font-family: FZFS;
+  } */
 
 /* RESPONSIVE CSS
 -------------------------------------------------- */
