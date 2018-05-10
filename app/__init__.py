@@ -17,6 +17,7 @@ db = MongoEngine(app)
 # app.session_interface = MongoEngineSessionInterface(db)
 
 login = LoginManager(app)
+login.login_view = 'login'
 
 bootstap = Bootstrap(app)
 

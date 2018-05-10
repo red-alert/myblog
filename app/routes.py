@@ -6,7 +6,7 @@ from flask import render_template, flash, redirect, url_for
 from flask import request
 from flask import send_from_directory
 from app.models import Picture, User
-from app.forms import LoginForm, PictureForm, RegistrationForm
+from app.forms import LoginForm, PictureForm, RegistrationForm, EditPictureForm
 from flask_login import current_user, login_user, login_required, logout_user
 from app import cache
 from werkzeug.utils import secure_filename
@@ -23,7 +23,6 @@ def index():
     paginated_pictures = pictures.paginate(page=page, per_page=app.config['PIC_PER_PAGE'])
     current_page = paginated_pictures.page
     total_page = paginated_pictures.pages
-    print(total_page)
     next_url = url_for('index', page=paginated_pictures.next_num) if paginated_pictures.has_next else None
     prev_url = url_for('index', page=paginated_pictures.prev_num) if paginated_pictures.has_prev else None
     url_list = []
@@ -63,6 +62,27 @@ def pictures_by_tag(tag):
     }
     return render_template('pictures_by_tag.html', pictures=pictures, tag=tag, tag_dict=tag_dict)
 
+@app.route('/edit_pictures')
+@login_required
+def edit_pictures():
+    pictures = Picture.objects.order_by('-create_time')
+    return render_template('edit_pictures.html', pictures=pictures)
+
+@app.route('/edit_pictures/<id>', methods=['GET', 'POST'])
+@login_required
+def edit_picture(id):
+    picture = Picture.objects.get(id=id)
+    form = EditPictureForm( description=picture.description, shot_time=picture.shot_time, place=picture.place, tags=picture.tags)
+    if form.validate_on_submit():
+        picture.description = form.description.data
+        picture.shot_time = form.shot_time.data
+        picture.place = form.place.data
+        picture.tags = form.tags.data
+        picture.save()
+        flash('picture info updated')
+        return redirect(url_for('edit_pictures'))
+    return render_template('edit_picture.html', form=form, picture=picture)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -70,16 +90,14 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.objects.get(username=form.username.data)
-        print(user.username)
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
-        # next_page = request.args.get('next')
-        # if not next_page or url_parse(next_page).netloc != '':
-        #     next_page = url_for('index')
-        #     return redirect(next_page)
-        return redirect(url_for('upload'))
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
 @app.route('/logout')
@@ -111,29 +129,27 @@ def serve_static_files(filename):
 @app.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
-    if current_user.is_authenticated:
-        form = PictureForm()
-        if form.validate_on_submit():
-        # if request.method == 'POST':
-            if 'file' not in request.files:
-                flash('No File!')
-                return redirect(url_for('upload'))
-            if form.file.data.filename == '':
-                flash('No Selected File!')
-                return redirect(url_for('upload'))
-            if form.file and allowed_file(form.file.data.filename):
-                filename = secure_filename(form.file.data.filename)
-                extension = filename.rsplit('.', 1)[1].lower()
-                picture = Picture(extension=extension, description=form.description.data, shot_time=form.shot_time.data, place=form.place.data, tags=form.tags.data)
-                picture.save()
-                unified_filename = str(picture.id) + '.' + extension
-                f = form.file.data
-                picture_handler(f, unified_filename)
-                flash('New picture uploaded!')
-                return redirect(url_for('upload'))
-        return render_template('upload.html', title='Upload', form=form)
-    else:
-        return redirect(url_for('login'))
+    form = PictureForm()
+    if form.validate_on_submit():
+    # if request.method == 'POST':
+        if 'file' not in request.files:
+            flash('No File!')
+            return redirect(url_for('upload'))
+        if form.file.data.filename == '':
+            flash('No Selected File!')
+            return redirect(url_for('upload'))
+        if form.file and allowed_file(form.file.data.filename):
+            filename = secure_filename(form.file.data.filename)
+            extension = filename.rsplit('.', 1)[1].lower()
+            picture = Picture(extension=extension, description=form.description.data, shot_time=form.shot_time.data, place=form.place.data, tags=form.tags.data)
+            picture.save()
+            unified_filename = str(picture.id) + '.' + extension
+            f = form.file.data
+            picture_handler(f, unified_filename)
+            flash('New picture uploaded!')
+            return redirect(url_for('upload'))
+    return render_template('upload.html', title='Upload', form=form)
+# return redirect(url_for('login'))
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
@@ -165,4 +181,4 @@ def picture_handler(picture, filename):
     resized_picture.save(os.path.join(app.config['APP_DIR'], app.config['UPLOAD_FOLDER'], 'resized', filename))
     croped_picture.save(os.path.join(app.config['APP_DIR'], app.config['UPLOAD_FOLDER'], 'thumbnail', filename))
 
-    return print("picture successfully handeled")
+    return print("picture successfully handled")

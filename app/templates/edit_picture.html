@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+<div class="blank-margin"></div>
+<div class="container">
+        <div class="col-md-3">
+            <img class="mini-img" src="../pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}">
+            <hr class="featurette-divider">
+            {{ wtf.quick_form(form) }}
+            <hr>
+        </div>
+</div>
+
+
+{% endblock %}

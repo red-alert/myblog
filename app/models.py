@@ -6,7 +6,7 @@ from datetime import datetime
 
 class Picture(db.Document):
     extension = db.StringField(max_length=4)
-    description = db.StringField(max_length=255)
+    description = db.StringField()
     shot_time = db.DateTimeField()
     create_time = db.DateTimeField(default=datetime.utcnow())
     place = db.StringField(max_length=255)
@@ -33,5 +33,6 @@ class User(UserMixin, db.Document):
 
 @login.user_loader
 def load_user(user_id):
+    print("hello %s" % user_id)
     user = User.objects(id=user_id)[0]
     return user

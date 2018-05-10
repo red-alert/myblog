@@ -5,7 +5,7 @@
     <div class="container">
         {% for year in years %}
             {% for picture in pictures_by_year[year] %}
-                <a href="../pictures/resized/{{ picture.id }}.{{ picture.extension }}"><img class="by-year-img" src="../pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}"></a>
+                <a href="../pictures/resized/{{ picture.id }}.{{ picture.extension }}"><img class="mini-img" src="../pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}"></a>
             {% endfor %}
             <div class="row"><div class="col-md-2 col-md-push-10 fzfs"><p>以上发生在 {{ year }} 年</p></div></div>
             <hr class="featurette-divider">

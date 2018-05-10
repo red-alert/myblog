@@ -5,6 +5,8 @@ from wtforms.validators import DataRequired, ValidationError, EqualTo, Length
 from app.models import User, Picture
 from app import app
 
+tag_choices = [('none', 'None'), ('mountain', '高山'), ('water', '流水'), ('things', '万物'), ('people', '人间'), ('me', '我')]
+
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -12,13 +14,20 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign in')
 
 class PictureForm(FlaskForm):
-    description = TextAreaField('description', validators=[Length(min=0, max=255)])
+    description = TextAreaField('description', validators=[DataRequired()])
     shot_time = DateField('shot time', validators=[])
     place = StringField('place', validators=[])
-    tags = SelectField(choices=[('none', 'None'), ('mountain', '高山'), ('water', '流水'), ('things', '万物'), ('people', '人间'), ('me', '我')], validators=[DataRequired()])
+    tags = SelectField(choices=tag_choices, validators=[DataRequired()])
     # direction = RadioField(choices=[('vertical', 'Vertical'), ('horizontal', 'Horizontal')], validators=[DataRequired()])
     file = FileField('File', validators=[FileRequired(), FileAllowed(app.config['ALLOWED_EXTENSIONS'])])
     submit = SubmitField('Upload')
+
+class EditPictureForm(FlaskForm):
+    description = TextAreaField('description', validators=[DataRequired()])
+    shot_time = DateField('shot_time', validators=[])
+    place = StringField('place', validators=[])
+    tags = SelectField(choices=tag_choices, validators=[DataRequired()])
+    submit = SubmitField('Update')
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
