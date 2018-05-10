@@ -4,7 +4,7 @@
     <div class="container blank-margin"></div>
     <div class="container">
         {% for picture in pictures %}
-                <a href="{{ url_for('edit_picture', id=picture.id )}}"><img class="by-year-img" src="../pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}"></a>
+                <a href="{{ url_for('edit_picture', id=picture.id )}}"><img class="mini-img" src="../pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}"></a>
         {% endfor %}
     </div>
 {% endblock %}
