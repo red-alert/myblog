@@ -28,6 +28,7 @@ class EditPictureForm(FlaskForm):
     place = StringField('place', validators=[])
     tags = SelectField(choices=tag_choices, validators=[DataRequired()])
     submit = SubmitField('Update')
+    delete = SubmitField('Delete')
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

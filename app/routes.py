@@ -74,6 +74,11 @@ def edit_picture(id):
     picture = Picture.objects.get(id=id)
     form = EditPictureForm( description=picture.description, shot_time=picture.shot_time, place=picture.place, tags=picture.tags)
     if form.validate_on_submit():
+        if form.delete.data:
+            picture_remover(picture)
+            picture.delete()
+            flash('picture deleted')
+            return redirect(url_for('edit_pictures'))
         picture.description = form.description.data
         picture.shot_time = form.shot_time.data
         picture.place = form.place.data
@@ -182,3 +187,10 @@ def picture_handler(picture, filename):
     croped_picture.save(os.path.join(app.config['APP_DIR'], app.config['UPLOAD_FOLDER'], 'thumbnail', filename))
 
     return print("picture successfully handled")
+
+def picture_remover(picture):
+    os.remove(os.path.join(app.config['APP_DIR'], app.config['UPLOAD_FOLDER'], 'origin', str(picture.id)+'.'+picture.extension))
+    os.remove(os.path.join(app.config['APP_DIR'], app.config['UPLOAD_FOLDER'], 'resized', str(picture.id)+'.'+picture.extension))
+    os.remove(os.path.join(app.config['APP_DIR'], app.config['UPLOAD_FOLDER'], 'thumbnail', str(picture.id)+'.'+picture.extension))
+
+    return print("picture file removed")
