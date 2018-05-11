@@ -17,6 +17,11 @@ from collections import defaultdict
 @app.route('/')
 @app.route('/index')
 def index():
+    """
+    main page of the blog:
+    it shows 5pages carousel
+    10 photos ordered by shot time per page
+    """
     pictures = Picture.objects().order_by('-shot_time')
     carousel_pictures = pictures.order_by('-create_time')[:5]
     page = request.args.get('page', 1, type=int)
@@ -26,19 +31,26 @@ def index():
     next_url = url_for('index', page=paginated_pictures.next_num) if paginated_pictures.has_next else None
     prev_url = url_for('index', page=paginated_pictures.prev_num) if paginated_pictures.has_prev else None
     url_list = []
-    for p in range(1, total_page+1):
+    for p in range(1, total_page+1): # so page number start from 1
         url = url_for('index', page=p)
         url_list.append(url)
     return render_template('index.html', pictures=paginated_pictures.items, next_url=next_url, prev_url=prev_url, carousel_pictures=carousel_pictures, current_page=current_page, total_page=total_page, url_list=url_list)
 
 @app.route('/about')
 def about():
+    """
+    about page
+    a static page shows info about the site
+    """
     pictures = Picture.objects()
     carousel_pictures = pictures.order_by('-create_time')[:5]
     return render_template('about.html', carousel_pictures=carousel_pictures)
 
 @app.route('/pictures_by_year')
 def pictures_by_year():
+    """
+    view photos by year
+    """
     pictures = Picture.objects().order_by('-shot_time')
     year = 0
     years = []
@@ -52,6 +64,9 @@ def pictures_by_year():
 
 @app.route('/pictures_by_tag/<tag>')
 def pictures_by_tag(tag):
+    """
+    view photos by tag
+    """
     pictures = Picture.objects(tags=tag).order_by('-shot_time')
     tag_dict = {
     'mountain': '高山',
@@ -65,6 +80,9 @@ def pictures_by_tag(tag):
 @app.route('/edit_pictures')
 @login_required
 def edit_pictures():
+    """
+    list all photos ordered by create time
+    """
     pictures = Picture.objects.order_by('-create_time')
     return render_template('edit_pictures.html', pictures=pictures)
 
@@ -75,7 +93,8 @@ def edit_picture(id):
     form = EditPictureForm( description=picture.description, shot_time=picture.shot_time, place=picture.place, tags=picture.tags)
     if form.validate_on_submit():
         if form.delete.data:
-            picture_remover(picture)
+            try:
+                picture_remover(picture)
             picture.delete()
             flash('picture deleted')
             return redirect(url_for('edit_pictures'))
@@ -150,7 +169,8 @@ def upload():
             picture.save()
             unified_filename = str(picture.id) + '.' + extension
             f = form.file.data
-            picture_handler(f, unified_filename)
+            try:
+                picture_handler(f, unified_filename)
             flash('New picture uploaded!')
             return redirect(url_for('upload'))
     return render_template('upload.html', title='Upload', form=form)
@@ -160,6 +180,10 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 def picture_handler(picture, filename):
+    """
+    resize uploaded photos to a reasonable size
+    and save to local file system
+    """
     picture = Image.open(picture)
     width = picture.width
     height = picture.height
@@ -178,7 +202,7 @@ def picture_handler(picture, filename):
         right = 1080
         bottom = int((new_width+new_height)/2)
     box = (left, top, right, bottom)
-    resized_picture = picture.resize((new_width,new_height))
+    resized_picture = picture.resize((new_width,new_height), Image.ANTIALIAS)
     croped_picture = resized_picture.crop(box)
     croped_picture = croped_picture.resize((500,500))
 
@@ -189,6 +213,9 @@ def picture_handler(picture, filename):
     return print("picture successfully handled")
 
 def picture_remover(picture):
+    """
+    remove photo from file system
+    """
     os.remove(os.path.join(app.config['APP_DIR'], app.config['UPLOAD_FOLDER'], 'origin', str(picture.id)+'.'+picture.extension))
     os.remove(os.path.join(app.config['APP_DIR'], app.config['UPLOAD_FOLDER'], 'resized', str(picture.id)+'.'+picture.extension))
     os.remove(os.path.join(app.config['APP_DIR'], app.config['UPLOAD_FOLDER'], 'thumbnail', str(picture.id)+'.'+picture.extension))

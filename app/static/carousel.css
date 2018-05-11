@@ -11,8 +11,9 @@ body {
 
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
+/* flash message style */
 .alert {
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 /* Special class on .container surrounding .navbar, used for positioning it into place. */
@@ -72,10 +73,12 @@ body {
   object-fit: cover;
 }
 
+/* used to leave space for navbar on wide screen */
 .blank-margin {
   height: 90px;
 }
 
+/* shrink image for photos sorted by year or tag */
 .mini-img {
   height:auto;
   width:100px;
@@ -98,6 +101,7 @@ body {
   letter-spacing: 0px;
 }
 
+/* add style for photo description */
 .pic-description::first-letter {
   font-size: 3em;
   margin-bottom: 4px;

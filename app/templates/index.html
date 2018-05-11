@@ -7,10 +7,8 @@
 <div class="container">
 <hr class="featurette-divider">
 
-{% for picture in pictures %}
-{% set looper = loop.cycle('odd', 'even') %}
-        {% include '_picture_%s.html' % looper %}
-{% endfor %}
+{% include "_featurette.html" %}
+
 <nav arial-label="...">
     <ul class="pager">
         <li class="previous{% if not prev_url %} hidden{% endif %}">

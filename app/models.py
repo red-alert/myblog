@@ -16,7 +16,7 @@ class Picture(db.Document):
     # direction = db.StringField(max_length=10)
 
     def __repr__(self):
-        return '<Picture {}>'.format(self.id)
+        return '<Picture {}>'.format(self.id) # return picture object may need modification
 
 class User(UserMixin, db.Document):
     username = db.StringField(max_length=60)
