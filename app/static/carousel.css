@@ -100,7 +100,7 @@ body {
 
 .pic-description::first-letter {
   font-size: 3em;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   margin-right: 8px;
   float: left;
 }
