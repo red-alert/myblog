@@ -95,6 +95,8 @@ def edit_picture(id):
         if form.delete.data:
             try:
                 picture_remover(picture)
+            except:
+                print("image file removing unsuccessully, try manual")
             picture.delete()
             flash('picture deleted')
             return redirect(url_for('edit_pictures'))
@@ -171,6 +173,8 @@ def upload():
             f = form.file.data
             try:
                 picture_handler(f, unified_filename)
+            except:
+                print("picture file may not be updated")
             flash('New picture uploaded!')
             return redirect(url_for('upload'))
     return render_template('upload.html', title='Upload', form=form)
