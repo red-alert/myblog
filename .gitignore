@@ -52,6 +52,7 @@ Temporary Items
 pictures/
 venv/
 __pycache__/
+app/__pycache__/
 
 config.py
 
