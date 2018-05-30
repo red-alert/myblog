@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row"><div class="col-md-2 col-md-push-10 fzfs"><h2>{{ tag_dict[tag] }}</h2></div></div>
         {% for picture in pictures %}
-                <a href="../pictures/resized/{{ picture.id }}.{{ picture.extension }}"><img class="mini-img" src="../pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}"></a>
+                <a href="../static/pictures/resized/{{ picture.id }}.{{ picture.extension }}"><img class="mini-img" src="../static/pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}"></a>
         {% endfor %}
     </div>
 {% endblock %}
