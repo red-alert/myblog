@@ -8,5 +8,5 @@ print("activated!")
 print(sys.path)
 sys.path.insert(0, '/var/www/myblog/')
 
-from app import app as application
+from myblog import app as application
 application.secret_key = 'you will never guess!'

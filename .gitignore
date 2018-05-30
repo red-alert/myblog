@@ -53,6 +53,7 @@ venv/
 __pycache__/
 app/__pycache__/
 .env
+*.wsgi
 
 # ==================
 # Python related
