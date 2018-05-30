@@ -15,6 +15,9 @@ class Picture(db.Document):
     # filename = db.StringField(max_length=60)
     # direction = db.StringField(max_length=10)
 
+    def __str__(self):
+        return str(self.id)
+
     def __repr__(self):
         return '<Picture {}>'.format(self.id) # return picture object may need modification
 
