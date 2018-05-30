@@ -9,14 +9,13 @@
 
 {% block styles %}
     {{ super() }}
-    <link href="../static/carousel.css" rel="stylesheet">
+    <link href="../static/styles/carousel.css" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 {% endblock %}
 
 {% block scripts %}
     {{ super () }}
     <script src="../static/scripts/addLoadEvent.js"></script>
-    <script src="../static/scripts/formInputType.js"></script>
 {% endblock %}
 
 {% block navbar %}

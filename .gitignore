@@ -49,14 +49,17 @@ Temporary Items
 # ===================
 # Folders
 # ===================
-pictures/
 venv/
 __pycache__/
 app/__pycache__/
-
-config.py
+.env
 
 # ==================
 # Python related
 # ==================
 *.pyc
+
+# ==================
+# Photos
+# ==================
+*.jpg

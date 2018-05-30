@@ -1,27 +1,34 @@
 from flask import Flask
 from config import Config
 from flask_bootstrap import Bootstrap
-# import mongoengine
 from flask_mongoengine import MongoEngine, MongoEngineSessionInterface
 from flask_login import LoginManager
 from flask_cache import Cache
 
-app = Flask(__name__)
-app.config.from_object(Config)
-# db = mongoengine.connect(app.config['MONGODB_NAME'], host=app.config['MONGODB_HOST'])
-# db = mongoengine.connect('test', host='127.0.0.1')
-# print("mongodb connected!")
-# db.close()
-# print("mongodb closed!")
-db = MongoEngine(app)
-# app.session_interface = MongoEngineSessionInterface(db)
-
-login = LoginManager(app)
+db = MongoEngine()
+login = LoginManager()
 login.login_view = 'login'
-
-bootstap = Bootstrap(app)
-
+bootstrap = Bootstrap()
 cache = Cache(config={'CACHE_TYPE': 'simple'})
-cache.init_app(app)
 
-from app import routes
+def create_app(config_class=Config):
+    app = Flask(__name__)
+
+    app.config.from_object(config_class)
+    db.init_app(app)
+    login.init_app(app)
+    bootstrap.init_app(app)
+
+    with app.app_context():
+        from app.admin import bp as admin_bp
+        app.register_blueprint(admin_bp, url_prefix='/admin')
+    from app.auth import bp as auth_bp
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+    from app.errors import bp as errors_bp
+    app.register_blueprint(errors_bp)
+    from app.main import bp as main_bp
+    app.register_blueprint(main_bp)
+
+    return app
+
+from app import models
