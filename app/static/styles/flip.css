@@ -17,6 +17,14 @@
 		transform: rotateY(180deg);
 	}
 
+ .flip .flipper{
+    transform: rotateY(180deg);
+  }
+
+  .flip:hover .flipper {
+    transform: rotateY(0deg);
+  }
+
 .flip-container, .front, .back {
 	width: 100px;
 	height: 100px;
@@ -25,7 +33,7 @@
 /* flip speed goes here */
 .flipper {
 	backface-visibility: hidden;
-	transition: 0.6s;
+	transition: 0.4s;
 	transform-style: preserve-3d;
 	position: relative;
 }
