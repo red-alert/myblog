@@ -32,6 +32,9 @@
 
 /* flip speed goes here */
 .flipper {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
 	backface-visibility: hidden;
 	transition: 0.4s;
 	transform-style: preserve-3d;
@@ -40,6 +43,9 @@
 
 /* hide back of pane during swap */
 .front, .back {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
 	backface-visibility: hidden;
 	position: absolute;
 	top: 0;
