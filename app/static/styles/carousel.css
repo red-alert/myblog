@@ -78,13 +78,7 @@ body {
   height: 90px;
 }
 
-/* shrink image for photos sorted by year or tag */
-.mini-img {
-  height:auto;
-  width:100px;
-  max-width:100%;
-  margin: 5px 5px;
-}
+
 
 
 /* Featurettes
