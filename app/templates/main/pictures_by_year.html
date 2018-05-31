@@ -1,11 +1,33 @@
 {% extends "base.html" %}
 
+{% block styles %}
+    {{ super() }}
+        <link href="../static/styles/flip.css" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+        <script src="../static/scripts/flip.js"></script>
+{% endblock %}
+
 {% block app_content %}
     <div class="container blank-margin"></div>
     <div class="container">
         {% for year in years %}
             {% for picture in pictures_by_year[year] %}
-                <a href="../static/pictures/resized/{{ picture.id }}.{{ picture.extension }}"><img class="mini-img" src="../static/pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}"></a>
+            {#     <a href="../static/pictures/resized/{{ picture.id }}.{{ picture.extension }}"><img class="mini-img" src="../static/pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}" /></a> #}
+            <a href="../static/pictures/resized/{{ picture.id }}.{{ picture.extension }}">
+            <div class="flip-container">
+                <div class="flipper">
+                    <div class="front">
+                        <img class="mini-img" src="../static/pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}" />
+                    </div>
+                    <div class="back">
+                        <p>{{ picture.shot_time.strftime('%Y-%m-%d') }}</p>
+                        <p>{{ picture.place }}</p>
+                    </div>
+                </div>
+            </div></a>
             {% endfor %}
             <div class="row"><div class="col-md-2 col-md-push-10 fzfs"><p>以上发生在 {{ year }} 年</p></div></div>
             <hr class="featurette-divider">
