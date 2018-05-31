@@ -1,7 +1,7 @@
 function autoFlip(func) {
   setInterval(function() {
-    setInterval("randomFlip()", randomTime())
-  }, randomTime())
+    setTimeout("randomFlip()", randomTime(2500,1500))
+  }, randomTime(500,500))
 }
 
 function randomFlip() {
@@ -11,8 +11,8 @@ function randomFlip() {
   flipper.classList.toggle("flip");
 }
 
-function randomTime() {
-  t = Math.floor((Math.random()*500)+3500)
+function randomTime(dif, shortest) { //in miliseconds
+  t = Math.floor((Math.random()*dif)+shortest)
   return t
 }
 
@@ -28,5 +28,4 @@ function addLoadEvent(func) {
   }
 }
 
-addLoadEvent(randomFlip)
 addLoadEvent(autoFlip)
