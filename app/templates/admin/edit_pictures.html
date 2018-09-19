@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block styles %}
+    {{ super() }}
+        <link href="../static/styles/flip.css" rel="stylesheet">
+{% endblock %}
+
 {% block app_content %}
     <div class="container blank-margin"></div>
     <div class="container">
