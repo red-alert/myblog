@@ -24,8 +24,8 @@ def index():
     current_page = paginated_pictures.page
     total_page = paginated_pictures.pages
 
-    page_start = 0
-    page_end = 4
+    page_start = 1
+    page_end = 5
     if total_page < 5:
         page_end = total_page
     else:
