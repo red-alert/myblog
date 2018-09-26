@@ -10,7 +10,7 @@
 {% include "main/_featurette.html" %}
 
 <nav arial-label="...">
-    <ul class="pager">
+{#    <ul class="pager">
         <li class="previous{% if not prev_url %} hidden{% endif %}">
             <a href="{{ prev_url or '#' }}">
                 <span aria-hidden="true">&larr;</span>
@@ -28,8 +28,30 @@
             </a>
         </li>
     </ul>
-</nav>
-</div>
+#}
+
+    <ul class="pager">
+        {% if page_start==0 %}
+        <li>
+            <a href="{{ url_list[0] }}">1</a>
+        </li>
+        <p> ... </p>
+        {% endif %}
+        {% for page in range(page_start,page_end) %}
+        <li class="{% if current_page==(page+1) %}disabled{% endif %}">
+            <a href="{{ url_list[page] }}">{{ page+1 }}
+            </a>
+        </li>
+        {% endfor %}
+        {% if page_end==total_page %}
+        <p> ... </p>
+        <li>
+            <a href="{{ url_list[total_page] }}">{{ total_page+1 }}</a>
+        </li>
+        {% endif %}
+    </ul>
+
+</nav></div>
 <!-- /END THE FEATURETTES -->
 
 

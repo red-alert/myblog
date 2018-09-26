@@ -23,6 +23,18 @@ def index():
                                            per_page=current_app.config['PIC_PER_PAGE'])
     current_page = paginated_pictures.page
     total_page = paginated_pictures.pages
+
+    page_start = 0
+    page_end = 4
+    if total_page < 5:
+        page_end = total_page
+    else:
+        page_start = current_page - 2
+        page_end = current_page + 2
+        if page_end > total_page:
+            page_start = total_page - 5
+            page_end = total_page
+
     next_url = url_for('main.index', page=paginated_pictures.next_num) \
                         if paginated_pictures.has_next else None
     prev_url = url_for('main.index', page=paginated_pictures.prev_num) \
@@ -38,6 +50,8 @@ def index():
                            carousel_pictures=carousel_pictures,
                            current_page=current_page,
                            total_page=total_page,
+                           page_start=page_start,
+                           page_end=page_end,
                            url_list=url_list)
 
 @bp.route('/about')
