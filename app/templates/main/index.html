@@ -31,7 +31,7 @@
 #}
 
     <ul class="pager">
-        {% if page_start==1 %}
+        {% if page_start!=1 %}
         <li>
             <a href="{{ url_list[0] }}">1</a>
         </li>
@@ -43,7 +43,7 @@
             </a>
         </li>
         {% endfor %}
-        {% if page_end==total_page %}
+        {% if page_end!=total_page %}
         <p> ... </p>
         <li>
             <a href="{{ url_list[total_page-1] }}">{{ total_page }}</a>

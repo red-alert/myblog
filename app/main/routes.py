@@ -31,8 +31,9 @@ def index():
     else:
         page_start = current_page - 2
         page_end = current_page + 2
+        if page_start < 1:
+            page_start = 1
         if page_end > total_page:
-            page_start = total_page - 5
             page_end = total_page
 
     next_url = url_for('main.index', page=paginated_pictures.next_num) \
