@@ -35,7 +35,7 @@
         <li>
             <a href="{{ url_list[0] }}">1</a>
         </li>
-        <p> ... </p>
+        <li> ... </li>
         {% endif %}
         {% for page in range(page_start,page_end+1) %}
         <li class="{% if current_page==(page) %}disabled{% endif %}">
@@ -44,7 +44,7 @@
         </li>
         {% endfor %}
         {% if page_end!=total_page %}
-        <p> ... </p>
+        <li> ... </li>
         <li>
             <a href="{{ url_list[total_page-1] }}">{{ total_page }}</a>
         </li>
