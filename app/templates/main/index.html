@@ -31,22 +31,22 @@
 #}
 
     <ul class="pager">
-        {% if page_start==0 %}
+        {% if page_start==1 %}
         <li>
             <a href="{{ url_list[0] }}">1</a>
         </li>
         <p> ... </p>
         {% endif %}
         {% for page in range(page_start,page_end+1) %}
-        <li class="{% if current_page==(page+1) %}disabled{% endif %}">
-            <a href="{{ url_list[page] }}">{{ page+1 }}
+        <li class="{% if current_page==(page) %}disabled{% endif %}">
+            <a href="{{ url_list[page] }}">{{ page }}
             </a>
         </li>
         {% endfor %}
         {% if page_end==total_page %}
         <p> ... </p>
         <li>
-            <a href="{{ url_list[total_page] }}">{{ total_page+1 }}</a>
+            <a href="{{ url_list[total_page] }}">{{ total_page }}</a>
         </li>
         {% endif %}
     </ul>
