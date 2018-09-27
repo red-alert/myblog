@@ -33,9 +33,9 @@
     <ul class="pager">
         {% if page_start!=1 %}
         <li>
-            <a href="{{ url_list[0] }}">1</a>
+            <a href="{{ url_list[0] }}">|<-</a>
         </li>
-        <li> ... </li>
+        <li>  ...  </li>
         {% endif %}
         {% for page in range(page_start,page_end+1) %}
         <li class="{% if current_page==(page) %}disabled{% endif %}">
@@ -44,9 +44,9 @@
         </li>
         {% endfor %}
         {% if page_end!=total_page %}
-        <li> ... </li>
+        <li>  ...  </li>
         <li>
-            <a href="{{ url_list[total_page-1] }}">{{ total_page }}</a>
+            <a href="{{ url_list[total_page-1] }}">->|</a>
         </li>
         {% endif %}
     </ul>
