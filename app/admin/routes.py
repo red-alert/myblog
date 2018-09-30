@@ -14,10 +14,10 @@ def upload():
     if form.validate_on_submit():
         if 'file' not in request.files:
             flash('No File!')
-            return redirect(url_for('upload'))
+            return redirect(url_for('admin.upload'))
         if form.file.data.filename == '':
             flash('No Selected File!')
-            return redirect(url_for('upload'))
+            return redirect(url_for('admin.upload'))
         if form.file and allowed_file(form.file.data.filename):
             filename = secure_filename(form.file.data.filename)
             extension = filename.rsplit('.', 1)[1].lower()

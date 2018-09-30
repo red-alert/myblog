@@ -8,8 +8,8 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
 
     MONGODB_USER = os.environ.get('MONGODB_USER') or None
-    MONGODB_PASSWD= os.environ.get('MONGODB_PASSWD') or None
-    MONGODB_HOST= os.environ.get('MONGODB_HOST') or '127.0.0.1'
+    MONGODB_PASSWD = os.environ.get('MONGODB_PASSWD') or None
+    MONGODB_HOST = os.environ.get('MONGODB_HOST') or '127.0.0.1'
     MONGODB_NAME = os.environ.get('MONGODB_NAME') or 'test'
     # # MONGODB_DATABASE_HOST = 'mongodb://%s:%s@%s/%s' % MONGODB_USER, MONGODB_PASSWD, MONGODB_HOST, MONGODB_NAME
     # MONGODB_DATABASE_HOST = 'mongodb://%s' % MONGODB_HOST
@@ -19,6 +19,13 @@ class Config(object):
         'host': MONGODB_HOST,
         'username': MONGODB_USER,
         'password': MONGODB_PASSWD
+    }
+
+    REDIS_HOST = os.environ.get('REDIS_HOST') or None
+    REDIS_PORT = os.environ.get('REDIS_PORT') or None
+    REDIS_SETTINGS = {
+        'host': REDIS_HOST,
+        'port': REDIS_PORT,
     }
 
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -4,12 +4,19 @@ from flask_bootstrap import Bootstrap
 from flask_mongoengine import MongoEngine, MongoEngineSessionInterface
 from flask_login import LoginManager
 from flask_cache import Cache
+import redis
+
 
 db = MongoEngine()
 login = LoginManager()
 login.login_view = 'login'
 bootstrap = Bootstrap()
 cache = Cache(config={'CACHE_TYPE': 'simple'})
+redis_pool = redis.ConnectionPool(host=Config.REDIS_SETTINGS['host'],
+                                  port=Config.REDIS_SETTINGS['port'],
+                                  decode_responses=True)
+place_redis = redis.Redis(connection_pool=redis_pool)
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
