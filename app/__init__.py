@@ -14,7 +14,7 @@ bootstrap = Bootstrap()
 cache = Cache(config={'CACHE_TYPE': 'simple'})
 redis_pool = redis.ConnectionPool(host=Config.REDIS_SETTINGS['host'],
                                   port=Config.REDIS_SETTINGS['port'],
-                                  decode_responses=True)
+                                  decode_responses=False)
 place_redis = redis.Redis(connection_pool=redis_pool)
 
 

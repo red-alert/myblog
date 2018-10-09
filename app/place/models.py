@@ -17,6 +17,7 @@ class RedisCanvas(object):
     def get_board(cls):
         timestamp = time.time()
         bitmap = place_redis.get(CANVAS_ID) or ''
+        # print(struct.pack('I', int(timestamp)) + bitmap)
         return struct.pack('I', int(timestamp)) + bitmap
 
     @classmethod
@@ -35,9 +36,12 @@ class Pixel(db.Document):
 
     @classmethod
     def create(cls, color, x, y):
-        p = cls.objects.get(x=x,y=y) or None
-        if p:
-            p.color = color
+        try:
+            pixel = cls.objects.get(x=x,y=y)
+        except:
+            pixel = None
+        if pixel:
+            pixel.color = color
         else:
             pixel = cls(color=color, x=x, y=y)
         pixel.save()

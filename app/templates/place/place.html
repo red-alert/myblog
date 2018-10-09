@@ -46,7 +46,8 @@
 
 <div class="blank-margin"></div>
 <div class="container">
-    {{ wtf.quick_form(form) }}
+    {# {{ wtf.quick_form(form) }} #}
+    <span id="canvasText"></span>
 </div>
 {% endblock %}
 
@@ -58,5 +59,6 @@
 
 {% block scripts %}
     {{ super() }}
+    <script src="../static/scripts/place/controller.js"></script>
     {# <script src="../static/scripts/place/**********.js"></script> #}
 {% endblock %}
