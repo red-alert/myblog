@@ -94,6 +94,21 @@ var Canvasse = {
   }
 }
 
+var Client = {
+  function setInitialState(state) {
+    var canvas = [];
+    var colorIndex, color;
+    for (var i=0; i<state.length; i++) {
+      colorIndex=state[i];
+      color = this.getPaletteColorABGR(colorIndex);
+      Canvasse.setBufferState(i,color);
+      if (colorIndex > 0) {
+        this.state[i] = colorIndex;
+      }
+    }
+  }
+}
+
 function draw() {
   getBitmap().then(function(timestamp, canvas){
     if (!canvas) { return; }
