@@ -11,9 +11,8 @@ function loadXMLDoc(url) {
   }
 }
 
-
-
 function getBitmap() {
+  var dfd = $.Deferred();
   var timestamp;
   var canvas = new Uint8Array(100 * 100);
   var offset = 0;
@@ -42,10 +41,66 @@ function getBitmap() {
       arrayBuffer = xmlhttp.response;
       var responseArray = new Uint8Array(arrayBuffer);
       handleChunk(responseArray);
-      document.getElementById("canvasText").innerHTML=canvas;
+      dfd.resolve(timestamp, canvas);
     }
   }
+  return dfd.promise()
+}
 
+var Canvasse = {
+  var width = 100;
+  var height = 100;
+  var canvas = document.getElementById('place-canvasse');
+  var ctx = canvas.getContext('2d');
+  var buffer = new ArrayBuffer( 100 * 100 * 4);
+  var readBuffer = new Unit8ClampedArray(this.buffer);
+  var writeBuffer = new Unit8Array(this.buffer);
+  var isBufferDirty = false;
+  var isDisplayDirty = false;
+
+  function drawTileAt(x, y, color) {
+    this.drawTileToBuffer(x, y, color);
+  }
+
+  function drawTileToBuffer(x, y, color){
+    var i = this.getIndexFromCoords(x, y);
+    this.setBufferState(i, color);
+  }
+
+  function getIndexFromCoords(x, y) {
+    return y * 100 + x;
+  }
+
+  function setBufferState(i, color) {
+    this.writeBuffer[i] = color;
+    this.isBufferDirty = true;
+  }
+
+  function drawTileToDisplay(x, y, color) {
+    this.ctx.fillStyle = color;
+    this.ctx.fillRect(x, y, 1, 1);
+    this.isDisplayDirty = true;
+  }
+
+  function drawBufferToDisplay() {
+    var imageData = new ImageData(this.readBuffer, this.width, this.height);
+    this.ctx.putImageData(imageData, 0, 0);
+    this.isBufferDirty = false;
+  }
+
+  function clearRectFromDisplay(x, y, width, height) {
+    this.ctx.clearRect(x, y, width, height);
+    this.isDisplayDirty = true;
+  }
+}
+
+function draw() {
+  getBitmap().then(function(timestamp, canvas){
+    if (!canvas) { return; }
+
+
+
+  })
 }
 
 addLoadEvent(loadXMLDoc)
