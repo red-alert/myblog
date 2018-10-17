@@ -9,18 +9,13 @@ from app.place.forms import TestForm
 from flask import Response
 
 import struct
+import random
 
 @bp.route('/place', methods=['GET','POST'])
 def place_page():
-    p.create(14,1,1)
-    p.create(15,2,1)
-    p.create(10,3,1)
-    p.create(13,1,0)
-    p.create(9,0,0)
-    p.create(10,2,0)
-    p.create(11,3,0)
-    p.create(12,4,0)
-    p.create(13,5,0)
+    # for i in range(30):
+    #     for j in range(30):
+    #         p.create(random.randint(1,15),i ,j)
     return render_template('place/place.html')
 
 @api.resource('/place/helloworld', endpoint='HelloWorld')

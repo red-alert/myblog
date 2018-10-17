@@ -9,15 +9,14 @@ from app import place_redis
 from app import db
 
 CANVAS_ID = "real_1"
-CANVAS_WIDTH = 100
-CANVAS_HEIGHT = 100
+CANVAS_WIDTH = 500
+CANVAS_HEIGHT = 500
 
 class RedisCanvas(object):
     @classmethod
     def get_board(cls):
         timestamp = time.time()
         bitmap = place_redis.get(CANVAS_ID) or ''
-        # print(struct.pack('I', int(timestamp)) + bitmap)
         return struct.pack('I', int(timestamp)) + bitmap
 
     @classmethod
