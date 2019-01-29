@@ -106,6 +106,34 @@ var Canvasse = {
     this.ctx.clearRect(x, y, width, height);
     this.isDisplayDirty = true;
   },
+<<<<<<< HEAD
+}
+
+var Camera = {
+  zoomElement: null,
+  panElement:null,
+  isDirty: false,
+
+  init: function(zoomElement, panElement) {
+    this.zoomElement = zoomElement;
+    this.panElement = panElement;
+  },
+
+  updateScale: function(s){
+    this.isDirty = true;
+    $(this.zoomElement).css({
+      transform: 'scale(' + s + ',' + s + ')',
+    });
+  },
+
+  updateTranslate: function(x, y) {
+    this.isDirty = true;
+    $(this.panElement).css({
+      transform: 'translate(' + x + 'px',' +y + 'px')',
+    });
+  },
+=======
+>>>>>>> d32d90dc2a59d8229a5170cfad94570d34a132c4
 }
 
 var Client = {
@@ -199,6 +227,12 @@ var Palette = {
 
 function draw() {
   var can = document.getElementById('place-canvasse');
+<<<<<<< HEAD
+  var camera = document.getElementById('place-camera');
+  var viewer = document.getElementById('place-viewer');
+  Camera.init(viewer, camera);
+=======
+>>>>>>> d32d90dc2a59d8229a5170cfad94570d34a132c4
   Canvasse.init(can,500,500);
   Client.init();
   getBitmap().then(function(timestamp, canvas){

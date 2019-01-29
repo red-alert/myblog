@@ -21,7 +21,6 @@ class PictureForm(FlaskForm):
                      FileAllowed(file_allowed)])
     submit = SubmitField('Upload')
 
-
 class EditPictureForm(FlaskForm):
     description = TextAreaField('description', validators=[DataRequired()])
     shot_time = DateField('shot_time', validators=[])
