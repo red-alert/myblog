@@ -28,8 +28,10 @@ def create_app(config_class=Config):
     app.register_blueprint(errors_bp)
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
-    from app.place import bp as place_bp
-    app.register_blueprint(place_bp)
+    # from app.place import bp as place_bp
+    # app.register_blueprint(place_bp)
+    from app.dreamcar import bp as dream_car_bp
+    app.register_blueprint(dream_car_bp)
 
     return app
 
