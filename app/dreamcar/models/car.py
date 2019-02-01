@@ -6,6 +6,7 @@ class CarDB(db.Document):
     price = db.IntField(default=0)
     age = db.IntField(default=0)
     mood = db.IntField(default=0)
+    have = db.BooleanField(default=False)
 
 class Car(object):
     def __init__(self):

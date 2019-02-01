@@ -4,6 +4,8 @@ from app import db
 
 from app.dreamcar.models.option import OptionDB, Option
 from app.dreamcar.models.contract import Contract, ContractDB
+from app.dreamcar.models.car import Car, CarDB
+from app.dreamcar.models.house import House, HouseDB
 
 from flask import render_template
 
@@ -23,13 +25,12 @@ class Event(object):
         self.message = None
 
     def run(self,choice):
+        print(self.options)
         if choice == "garage":
-            self.story = "车行里停着两辆车："
             self.hero.last_scene = self.hero.scene
             self.hero.scene = 5
             self.hero.update()
         elif choice == "house":
-            self.story = "你找到两处出租的房子："
             self.hero.last_scene = self.hero.scene
             self.hero.scene = 4
             self.hero.update()
@@ -38,7 +39,7 @@ class Event(object):
             self.hero.scene = 6
             self.hero.update()
         elif choice in ['0','1','2']:
-            self.option_processor(self.options[int(choice)])
+            self.option_processor(self.options[choice])
         else:
             self.hero.scene = 0
             self.hero.update()
@@ -88,7 +89,32 @@ class Event(object):
         pass
 
 class EventOne(Event):
-    pass
+    def __init__(self,hero):
+        super().__init__()
+        self.story = "新的一个月开始了"
+        self.hero = hero
+        self.options = []
+        job = self.hero.job.fetch()
+        house = self.hero.house.fetch()
+        car = self.hero.car.fetch()
+        if car.have:
+            car_mood = car.mood
+        else: car_mood = 0
+        if hero.health < 50:
+            self.options.append(Option(choice_message="医院看病，然后上班", results={"health":40,"mood":car_mood+house.mood+job.mood,"saving":0-100*(100-self.health)}))
+        else: pass
+        if hero.mood < 0:
+            self.options.append(Option(choice_message="请假一个月去玩", results={"mood":50, "saving":0-2*job.salary}))
+        else: pass
+        self.options.append(Option(choice_message="开车上班", results={"mood":car_mood+house.mood+job.mood}))
+
+    def option_processor(self,option):
+        self.hero.scene = 2
+        option = option
+        print("before")
+        helper(self.hero, option)
+        self.message = "test"
+        self.hero.update()
 
 class EventTwo(Event):
     pass
@@ -100,7 +126,19 @@ class EventHouse(Event):
     pass
 
 class EventGarage(Event):
-    pass
+    def __init__(self, hero):
+        self.hero = hero
+        car1 = Car.factory()
+        car2 = Car.factory()
+        self.message = None
+        self.story = "今天车行出售2台车"
+        a = Option(choice_message="1号车"+"总价:"+str(car1.price/10000)+"万", results={"car":"get"})
+        b = Option(choice_message="2号车"+"总价:"+str(car2.price/10000)+"万", results={"car":"get"})
+        c = Option(choice_message="摸了摸干瘪的钱包，下次再来吧", results={})
+        self.options = [a,b,c]
+
+    def option_processor(self, option):
+        pass
 
 class EventContract(Event):
     def __init__(self,hero):
@@ -140,6 +178,7 @@ def helper(hero, option):
     hero = hero
     results = option.results
     for key,value in results.items():
+        print(results.items())
         if key == "health":
             hero.health += value
         if key == "mood":

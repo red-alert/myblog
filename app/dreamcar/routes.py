@@ -20,6 +20,11 @@ def dreamcar(id):
     if request.args.get('choice'):
         c = request.args.get('choice')
         scene.update(c)
+    elif request.args.get('reset') == '1':
+        hero.scene = 1
+        scene = Scene(hero=hero)
+    else:
+        pass
     return render_template('dreamcar/dreamcar.html',id=id, scene=scene)
 
 # @bp.route('/dreamcar/<id>', methods=['GET', 'POST'])

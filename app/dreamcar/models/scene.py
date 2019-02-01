@@ -9,14 +9,12 @@ class Scene(object):
         self.options = options
         self.event = event
         self.init()
-        print('1')
 
     def init(self):
         self.event = Event.factory(self.hero)
         self.story = self.event.story
         self.options = self.event.options
         self.message = self.event.message
-        print(self.options)
 
     def factory(self):
         pass

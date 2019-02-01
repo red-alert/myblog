@@ -64,16 +64,15 @@ class Hero(object):
         self.girl = self.db.girl
         self.house = self.db.house
         self.job = self.db.job
+        self.car = self.db.car
         self.contract = self.db.contract
         self.scene = self.db.scene
         self.last_scene = self.db.last_scene
 
     def update(self):
-        print(self.db)
-        print(self)
         self.db.update(name=self.name, health=self.health, mood=self.mood, \
                        year=self.year, month=self.month, saving=self.saving, \
-                       girl=self.girl, house=self.house,  job=self.job, \
+                       girl=self.girl, house=self.house,  job=self.job, car=self.car, \
                        contract=self.contract, scene=self.scene, last_scene=self.last_scene)
 
     def __str__(self):
