@@ -19,7 +19,7 @@ MOOD = {"0":"非常开心", # 100 - 80
         "5":"抑郁到了极点", # -70 -
         "6":""}
 
-class HeroDB(db.document):
+class HeroDB(db.Document):
     name = db.StringField()
     health = db.IntField(default=100)
     mood = db.IntField(default=0)
@@ -30,10 +30,14 @@ class HeroDB(db.document):
     house = db.LazyReferenceField(HouseDB)
     job = db.LazyReferenceField(JobDB)
     car = db.LazyReferenceField(CarDB)
-    contract = db.ListField(db.LazyReferenceField(ContractDB))
+    contract = db.LazyReferenceField(ContractDB)
+    scene = db.IntField(default=0)
+    last_scene = db.IntField(default=0)
 
 class Hero(object):
-    def __init__(self,name,health=100,mood=0,year=0,month=0,saving=0,girl=False,house=None,job=None,car=None,contract=None)
+    def __init__(self, id, name,health=100,mood=0,year=0,month=0,saving=0,girl=False,house=None,job=None,car=None,contract=None, scene=None, last_scene=None):
+        self.id = id
+        self.db = None
         self.name = name
         self.health = health
         self.mood = mood
@@ -45,6 +49,29 @@ class Hero(object):
         self.job = job
         self.car = car
         self.contract = contract
+        self.scene = scene
+        self.last_scene = last_scene
+
+    def init(self, id):
+        self.db = HeroDB.objects.get(id=id)
+        self.name = self.db.name
+        self.health = self.db.health
+        self.mood = self.db.mood
+        self.year = self.db.year
+        self.month = self.db.month
+        self.saving = self.db.saving
+        self.girl = self.db.girl
+        self.house = self.db.house
+        self.job = self.db.job
+        self.contract = self.db.contract
+        self.scene = self.db.scene
+        self.last_scene = self.db.last_scene
+
+    def update(self):
+        self.db.update(name=self.name, health=self.health, mood=self.mood,
+                       year=self.year, month=self.month, saving=self.saving,
+                       girl=self.girl, house=self.house,  job=self.job,
+                       contract=self.contract, scene=self.scene, last_scene=self.last_scene)
 
     def __str__(self):
         return "Hero[{0}]:{1} {2} {3} {4} {5} {6}".format(str(self.id), self.year, self.month, self.saving, self.get_mood(), self.get_health())
@@ -87,3 +114,9 @@ class Hero(object):
 
     def month_expense(self):
         pass
+
+    def grow_old(self):
+        self.month += 1
+        if self.month > 12:
+            self.year += 1
+            self.month -=12

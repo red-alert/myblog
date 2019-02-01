@@ -8,9 +8,9 @@ class CarDB(db.document):
     mood = db.Intfield()
 
 class Car(object):
-    def __init__(self, price=None, age=None):
-        self.price = price or self.new_price()
-        self.age = age or 0
+    def __init__(self):
+        self.price = self.new_price()
+        self.age = 0
         self.mood = self.resolve_mood()
 
     @staticmethod
@@ -35,6 +35,18 @@ class Car(object):
         else:
             t = int(self.price*pow(0.8,self.age))
         return 5-self.age + t
+
+    @staticmethod
+    def get(hero): # 买车
+        pass
+
+    @staticmethod
+    def sell(hero): # 卖车
+        pass
+
+    @staticmethod
+    def destroy(hero): # 车消失
+        pass
 
 class CarGood(Car):
     def new_price(self):

@@ -35,6 +35,10 @@ class House(object):
     def resolve_mood(self):
         return 8 - self.ring
 
+    @staticmethod
+    def raise_rent(hero): # 给hero涨房租
+        pass
+
 class HouseGood(House):
     def new_rent(self):
         return 20000 - self.ring*2000 + randint(-5,5)*1000

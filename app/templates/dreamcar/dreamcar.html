@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+        <link href="../static/styles/xxx.css" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+        <script src="../static/scripts/xxx.js"></script>
+{% endblock %}
+
+{% block app_content %}
+    <div class="container blank-margin"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-8">
+                    <div class="row" id="story">
+                        <p>{{ scene.message }}</p>
+                        <p>{{ scene.story }}</p>
+                    </div>
+                    <div class="row" id="options">
+                        {% for option in scene.options %}
+                        <p>{{ option.message }}</p>
+                        {% endfor %}
+                    </div>
+                <div class="col-4">
+                    <div class="row" id="status">
+                        <p>{{ scene.hero.get_health() }}</p>
+                        <p>{{ scene.hero.get_mood() }}</p>
+                        <p>{{ scene.hero.saving }}</p>
+                    </div>
+                    <div class="row" id="property">
+                        <p><a href="{{ url_for('dreamcar.dreamcar') }}?choice=contract">contract</a></p>
+                        <p><a href="">garage</a></p>
+                        <p><a href="">move</a></p>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -11,14 +11,16 @@ class ContractDB(db.document):
     sum = db.IntField()
     total_age = db.IntField()
     age = db.IntField()
+    paid = db.BooleanField(default=False)
 
 class Contract(object):
-    def __init__(self, pre=None, sum=None, rest=None, total_age=None, age=None):
+    def __init__(self, pre=None, sum=None, rest=None, total_age=None, age=None, paid=False):
         self.pre = pre
         self.sum = sum
         self.rest = rest
         self.total_age = total_age
         self.age = age
+        self.paid = paid
         self.month_expense = self.resolve_expense
 
     @classmethod

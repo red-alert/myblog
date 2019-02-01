@@ -32,6 +32,18 @@ class Job(object):
     def resolve_mood(self):
         return 0 - int(log(self.salary, 10000)*100)%100
 
+    @staticmethod
+    def get(hero):
+        pass
+
+    @staticmethod
+    def lose(hero):
+        pass
+
+    @staticmethod
+    def raise_salary(hero):
+        pass
+
 class JobGood(Job):
     def new_salary(self):
         return 30000+randint(0,10)*5000
