@@ -1,10 +1,10 @@
 from app import db
 from random import randint
 
-class MarketDB(db.document):
-    cost = db.IntField()
-    health = db.IntField()
-    distance = db.IntField()
+class MarketDB(db.Document):
+    cost = db.IntField(default=0)
+    health = db.IntField(default=0)
+    distance = db.IntField(default=0)
 
 class Market(object):
     def __init__(self, cost=None, health=None, distance=None):

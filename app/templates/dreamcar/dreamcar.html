@@ -15,30 +15,36 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="col-8">
-                    <div class="row" id="story">
-                        <p>{{ scene.message }}</p>
-                        <p>{{ scene.story }}</p>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row" id="story">
+                            <p>{{ scene.message }}</p>
+                            <p>{{ scene.story }}</p>
+                        </div>
+                        <div class="row" id="options">
+                            {% if scene.options %}
+                            {% for option in scene.options %}
+                            <a href="{{ url_for('dreamcar.dreamcar', id=id) }}?choice={{ loop.index0 }}"><button>{{ option.choice_message }}</button></a>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="row" id="options">
-                        {% for option in scene.options %}
-                        <p>{{ option.message }}</p>
-                        {% endfor %}
+
+                    <div class="col-md-4">
+                        <div class="row" id="status">
+                            <p>你感到{{ scene.hero.get_health() }}</p>
+                            <p>你觉得{{ scene.hero.get_mood() }}</p>
+                            <p>攒下的钱：{{ scene.hero.saving }}</p>
+                        </div>
+                        <div class="row" id="property">
+                            <a href="{{ url_for('dreamcar.dreamcar', id=id ) }}?choice=contract"><button>contract</button></a>
+                            <a href="{{ url_for('dreamcar.dreamcar', id=id) }}?choice=garage"><button>garage</button></a>
+                            <a href="{{ url_for('dreamcar.dreamcar', id=id) }}?choice=move"><button>move</button></a>
+                        </div>
                     </div>
-                <div class="col-4">
-                    <div class="row" id="status">
-                        <p>{{ scene.hero.get_health() }}</p>
-                        <p>{{ scene.hero.get_mood() }}</p>
-                        <p>{{ scene.hero.saving }}</p>
-                    </div>
-                    <div class="row" id="property">
-                        <p><a href="{{ url_for('dreamcar.dreamcar') }}?choice=contract">contract</a></p>
-                        <p><a href="">garage</a></p>
-                        <p><a href="">move</a></p>
-                    </div>
-                </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

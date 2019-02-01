@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+        <link href="../static/styles/xxx.css" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+        <script src="../static/scripts/xxx.js"></script>
+{% endblock %}
+
+{% block app_content %}
+    <div class="container blank-margin"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {% if heros %}
+                {% for hero in heros %}
+                <p><a href='{{ url_for('dreamcar.dreamcar', id=hero.id) }}'>{{ hero.name }}</a></p>
+                {% endfor %}{% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

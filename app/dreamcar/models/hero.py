@@ -35,9 +35,9 @@ class HeroDB(db.Document):
     last_scene = db.IntField(default=0)
 
 class Hero(object):
-    def __init__(self, id, name,health=100,mood=0,year=0,month=0,saving=0,girl=False,house=None,job=None,car=None,contract=None, scene=None, last_scene=None):
+    def __init__(self, id, db=None, name=None,health=100,mood=0,year=0,month=0,saving=0,girl=False,house=None,job=None,car=None,contract=None, scene=None, last_scene=None):
         self.id = id
-        self.db = None
+        self.db = db
         self.name = name
         self.health = health
         self.mood = mood
@@ -51,6 +51,7 @@ class Hero(object):
         self.contract = contract
         self.scene = scene
         self.last_scene = last_scene
+        self.init(id=self.id)
 
     def init(self, id):
         self.db = HeroDB.objects.get(id=id)
@@ -68,13 +69,15 @@ class Hero(object):
         self.last_scene = self.db.last_scene
 
     def update(self):
-        self.db.update(name=self.name, health=self.health, mood=self.mood,
-                       year=self.year, month=self.month, saving=self.saving,
-                       girl=self.girl, house=self.house,  job=self.job,
+        print(self.db)
+        print(self)
+        self.db.update(name=self.name, health=self.health, mood=self.mood, \
+                       year=self.year, month=self.month, saving=self.saving, \
+                       girl=self.girl, house=self.house,  job=self.job, \
                        contract=self.contract, scene=self.scene, last_scene=self.last_scene)
 
     def __str__(self):
-        return "Hero[{0}]:{1} {2} {3} {4} {5} {6}".format(str(self.id), self.year, self.month, self.saving, self.get_mood(), self.get_health())
+        return "Hero[{0}]:{1} {2} {3} {4} {5} {6} {7}".format(str(self.id), self.name, self.year, self.month, self.saving, self.get_mood(), self.get_health(), self.db)
 
     def get_health(self):
         if self.health > 100:

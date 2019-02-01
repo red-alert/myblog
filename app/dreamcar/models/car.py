@@ -2,10 +2,10 @@ from app import db
 from random import randint
 from math import pow
 
-class CarDB(db.document):
-    price = db.IntField()
-    age = db.IntField()
-    mood = db.Intfield()
+class CarDB(db.Document):
+    price = db.IntField(default=0)
+    age = db.IntField(default=0)
+    mood = db.IntField(default=0)
 
 class Car(object):
     def __init__(self):
@@ -29,7 +29,7 @@ class Car(object):
     def now_price(self):
         return self.price / (0.2 * self.age)
 
-    def self.resolve_mood(self):
+    def resolve_mood(self):
         if self.price > 500000:
             t = 10
         else:

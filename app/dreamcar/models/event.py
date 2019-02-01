@@ -1,11 +1,13 @@
+import pdb
+
 from app import db
 
 from app.dreamcar.models.option import OptionDB, Option
-
+from app.dreamcar.models.contract import Contract, ContractDB
 
 from flask import render_template
 
-COLOR_FONT = {"up"： "<b>增加 </b>",
+COLOR_FONT = {"up": "<b>增加 </b>",
               "down": "<b>减少 </b>"}
 
 class EventDB(db.Document):
@@ -103,16 +105,21 @@ class EventGarage(Event):
 class EventContract(Event):
     def __init__(self,hero):
         self.hero = hero
-        if self.hero.contract.paid is False:
-            self.story = "你手上的买车合同：总价：" +
-                         str(self.hero.contract.sum) +
-                         "，贷款:" +
-                         str(self.hero.contract.sum-self.hero.contract.pre) +
-                         "元，总期：" + str(self.hero.contract.total_age) +
-                         "，当前：" + str(self.hero.contract.age)
-            a = Option(choice_message="提前还款",results={"saving":(0-self.hero.contract.money_pay_early())})
+        contract = Contract()
+        contract.from_db(self.hero.contract.fetch())
+        # pdb.set_trace()
+        self.message = None
+        if contract.paid is not True:
+            self.story = "你手上的买车合同：总价：" + \
+                         str(contract.sum) + \
+                         "，贷款本息:" + \
+                         str(contract.sum-contract.pre) + \
+                         "元，总期：" + str(contract.total_age) + \
+                         "，当前：" + str(contract.age)
+            a = Option(choice_message="提前还款",results={"saving":(0-contract.money_pay_early())})
             b = Option(choice_message="算了",results={})
-            options = [a, b]
+            self.options = [a, b]
+            # import pdb; pdb.set_trace()
         else:
             self.story = "你没有任何欠钱的买车合同"
 

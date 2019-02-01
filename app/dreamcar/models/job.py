@@ -2,10 +2,10 @@ from app import db
 from random import randint
 from math import log
 
-class JobDB(db.document):
-    salary = db.IntField()
-    ring = db.IntField()
-    mood = db.IntField()
+class JobDB(db.Document):
+    salary = db.IntField(default=0)
+    ring = db.IntField(default=0)
+    mood = db.IntField(default=0)
 
 class Job(object):
     def __init__(self, salary=None, ring=None):

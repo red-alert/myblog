@@ -4,11 +4,11 @@ from math import log
 
 from app.dreamcar.models.market import MarketDB
 
-class HouseDB(db.document):
-    rent = db.IntField()
-    ring = db.IntField()
-    mood = db.IntField()
-    market = db.LazyReferenceField(MarketDB)
+class HouseDB(db.Document):
+    rent = db.IntField(default=0)
+    ring = db.IntField(default=0)
+    mood = db.IntField(default=0)
+    markets = db.ListField(db.LazyReferenceField(MarketDB))
 
 class House(object):
     def __init__(self, rent=None, ring=None):

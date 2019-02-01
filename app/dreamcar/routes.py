@@ -1,10 +1,17 @@
 # from flask_restful import Resource, request
-from flask import jsonify, redirct, request
+from flask import jsonify, redirect, request, render_template
 
 from app.dreamcar.models.hero import Hero
+from app.dreamcar.models.hero import HeroDB
 from app.dreamcar.models.scene import Scene
 
+
 from app.dreamcar import bp
+@bp.route('/dreamcar', methods=['GET', 'POST'])
+def index():
+    heros = HeroDB.objects().all()
+    print(heros)
+    return render_template('dreamcar/index.html', heros=heros)
 
 @bp.route('/dreamcar/<id>', methods=['GET','POST'])
 def dreamcar(id):
@@ -13,7 +20,7 @@ def dreamcar(id):
     if request.args.get('choice'):
         c = request.args.get('choice')
         scene.update(c)
-    return render_template('dreamcar/dreamcar.html', scene=scene)
+    return render_template('dreamcar/dreamcar.html',id=id, scene=scene)
 
 # @bp.route('/dreamcar/<id>', methods=['GET', 'POST'])
 # def dreamcar(id):
