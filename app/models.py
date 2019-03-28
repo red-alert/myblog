@@ -21,6 +21,19 @@ class Picture(db.Document):
     def __repr__(self):
         return '<Picture {}>'.format(self.id) # return picture object may need modification
 
+class Video(db.Document):
+    description = db.StringField()
+    create_time = db.DateTimeField(default=datetime.utcnow())
+    url = db.StringField()
+
+class Photo(db.Document):
+    extension = db.StringField(max_length=4)
+
+class Gallery(db.Document):
+    name = db.StringField()
+    description = db.StringField()
+    photos = db.ListField(db.ReferenceField(Photo))
+
 class User(UserMixin, db.Document):
     username = db.StringField(max_length=60)
     password_hash = db.StringField(max_length=128)
@@ -33,6 +46,8 @@ class User(UserMixin, db.Document):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+
 
 @login.user_loader
 def load_user(user_id):

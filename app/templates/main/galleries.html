@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+        <link href="../static/styles/flip.css" rel="stylesheet">
+{% endblock %}
+
+{% block app_content %}
+    <div class="container blank-margin"></div>
+    <div class="container">
+        {% for gallery in galleries %}
+        <div class="row">
+            <div class="col-md-3 col-md-push-9"><h4>{{ gallery.name }}</h4>{% if current_user.is_authenticated %}<a class="btn btn-primary" href="{{ url_for('admin.edit_gallery', id=gallery.id) }}">编辑</a><a class="btn btn-primary" href="{{ url_for('admin.delete_from_gallery', id=gallery.id) }}">删除图片</a>{% endif %}<p>{{ gallery.description }}</p></div>
+            <div class="col-md-9 col-md-pull-3">
+            {% for photo in gallery.photos %}
+            <a href="../static/pictures/resized/{{ photo.id }}.{{ photo.extension }}"><img class="mini-img" src="../static/pictures/thumbnail/{{ photo.id }}.{{ photo.extension }}" /></a>
+            {% endfor %}
+            </div>
+        </div>
+        <hr class="featurette-divider">
+        {% endfor %}
+        <nav arial-label="...">
+            <ul class="pager">
+                {% if page_start!=1 %}
+                <li>
+                    <a href="{{ url_list[0] }}">|<-</a>
+                </li>
+                <li>  ...  </li>
+                {% endif %}
+                {% for page in range(page_start,page_end+1) %}
+                <li class="{% if current_page==(page) %}disabled{% endif %}">
+                    <a href="{{ url_list[page-1] }}">{{ page }}
+                    </a>
+                </li>
+                {% endfor %}
+                {% if page_end!=total_page %}
+                <li>  ...  </li>
+                <li>
+                    <a href="{{ url_list[total_page-1] }}">->|</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}

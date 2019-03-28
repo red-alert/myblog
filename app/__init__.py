@@ -7,7 +7,7 @@ from flask_cache import Cache
 
 db = MongoEngine()
 login = LoginManager()
-login.login_view = 'login'
+login.login_view = 'auth.login'
 bootstrap = Bootstrap()
 cache = Cache(config={'CACHE_TYPE': 'simple'})
 
@@ -28,8 +28,6 @@ def create_app(config_class=Config):
     app.register_blueprint(errors_bp)
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
-    from app.place import bp as place_bp
-    app.register_blueprint(place_bp)
 
     return app
 
