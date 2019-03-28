@@ -5,7 +5,7 @@ from collections import defaultdict
 from flask import render_template, flash, redirect, url_for, request
 from flask import current_app, send_from_directory
 
-from app.models import Picture
+from app.models import Picture, Video, Gallery, Photo
 from app.main import bp
 
 @bp.route('/')
@@ -102,6 +102,74 @@ def pictures_by_tag(tag):
                            pictures=pictures,
                            tag=tag,
                            tag_dict=tag_dict)
+
+@bp.route('/videos')
+def videos():
+    vs = Video.objects()
+    page = request.args.get('page', 1, type=int)
+    paginated_videos = vs.paginate(page=page, per_page=current_app.config['PIC_PER_PAGE'])
+    current_page = paginated_pictures.page
+    total_page = paginated_pictures.pages
+
+    page_start = 1
+    page_end = 5
+    if total_page < 5:
+        page_end = total_page
+    else:
+        page_start = current_page - 2
+        page_end = current_page + 2
+        if page_start < 1:
+            page_start = 1
+            page_end = 5
+        if page_end > total_page:
+            page_start = total_page - 4
+            page_end = total_page
+
+    url_list = []
+    for p in range(1, total_page+1): # so page number start from 1
+        url = url_for('main.videos', page=p)
+        url_list.append(url)
+    return render_template('main/videos.html',
+                           pictures=paginated_videos.items,
+                           current_page=current_page,
+                           total_page=total_page,
+                           page_start=page_start,
+                           page_end=page_end,
+                           url_list=url_list)
+
+@bp.route('/galleries')
+def galleries():
+    gs = Gallery.objects()
+    page = request.args.get('page', 1, type=int)
+    paginated_videos = vs.paginate(page=page, per_page=current_app.config['PIC_PER_PAGE'])
+    current_page = paginated_pictures.page
+    total_page = paginated_pictures.pages
+
+    page_start = 1
+    page_end = 5
+    if total_page < 5:
+        page_end = total_page
+    else:
+        page_start = current_page - 2
+        page_end = current_page + 2
+        if page_start < 1:
+            page_start = 1
+            page_end = 5
+        if page_end > total_page:
+            page_start = total_page - 4
+            page_end = total_page
+
+    url_list = []
+    for p in range(1, total_page+1): # so page number start from 1
+        url = url_for('main.gallies', page=p)
+        url_list.append(url)
+    return render_template('main/galleries.html',
+                           pictures=paginated_galleries.items,
+                           current_page=current_page,
+                           total_page=total_page,
+                           page_start=page_start,
+                           page_end=page_end,
+                           url_list=url_list)
 
 @bp.route('/static/pictures/<path:filename>')
 def serve_pictures(filename):

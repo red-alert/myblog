@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+        <link href="../static/styles/flip.css" rel="stylesheet">
+{% endblock %}
+
+{% block app_content %}
+    <div class="container blank-margin"></div>
+    <div class="container">
+        {% for gallery in galleries %}
+        <div class="row"><div class="col-md-2 col-md-push-10 fzfs"><h4>{{ gallery.name }}</h4>{% if current_user.is_authenticated %}<a class="btn btn-primary" href="{{ url_for('admin.edit_gallery', gallery.id) }}">编辑</a><a class="btn btn-primary" href="{{ url_for('admin.delete_from_gallery', gallery.id) }}">删除图片</a>{% endif %}</div></div>
+        <div class="row">
+            <div class="col-md-2 col-md-push-10"><p>{{ gallery.description }}</p></div>
+            <div>
+            {% for photo in gallery.photos %}
+            <a href="../static/pictures/resized/{{ photo.id }}.{{ photo.extension }}"><img class="mini-img" src="../static/pictures/thumbnail/{{ photo.id }}.{{ photo.extension }}" /></a>
+            {% endfor %}
+            </div>
+        </div>
+        <hr class="featurette-divider">
+        {% endfor %}
+    </div>
+{% endblock %}

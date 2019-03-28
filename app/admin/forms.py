@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed, DataRequired
 from wtforms import StringField,TextAreaField, DateField, SubmitField
 from wtforms import RadioField, SelectField
+from wtforms import MultipleFileField
 from flask import current_app
 
 tag_choices = [('none', 'None'),
@@ -19,8 +20,7 @@ class PictureForm(FlaskForm):
     tags = SelectField(choices=tag_choices, validators=[DataRequired()])
     file = FileField('File', validators=[FileRequired(),
                      FileAllowed(file_allowed)])
-    submit = SubmitField('Upload')
-
+    submit = SubmitField('upload')
 
 class EditPictureForm(FlaskForm):
     description = TextAreaField('description', validators=[DataRequired()])
@@ -29,3 +29,40 @@ class EditPictureForm(FlaskForm):
     tags = SelectField(choices=tag_choices, validators=[DataRequired()])
     submit = SubmitField('Update') # handle update function
     delete = SubmitField('Delete') # handle delete function
+
+class GalleryForm(FlaskForm):
+    name = StringField('name')
+    description = TextAreaField('description')
+    photos = MultipleFileField('photos')
+    submit = SubmitField('upload')
+
+class DeletePhotoForm(FlaskForm):
+    photos = SelectMultipleField('photos')
+    delete = SubmitField('Delete')
+
+class VideoForm(FlaskForm):
+    description = TextAreaField('description', validators=[DataRequired()])
+    url = TextAreaField('url', validators=[DataRequired()])
+    submit = SubmitField('submit')
+
+class EditVideoForm(FlaskForm):
+    description = TextAreaField('description', validators=[DataRequired()])
+    url = TextAreaField('url', validators=[DataRequired()])
+    submit = SubmitField('update')
+    delete = SubmitField('delete')
+
+class MultiCheck(object):
+    def __call__(self, field, **kwargs):
+        field_id = kwargs.pop('id', field.id)
+        html = [u'']
+        html.append(u'<table>')
+
+        for value, label in field.iter_choices():
+            html.append(u'<tr>\n')
+            html.append(u'<td><input type="checkbox" name="%s" value="%s"/></td>\n' % (field_id, value))
+            html.append(u'<td><img class="mini-img" src="../static/pictures/thumbnail/%s" /></td></tr>\n' % label )
+        html.append(u'</table>\n')
+        return u''.join(html)
+
+class MultiPicField(SelectMultipleField):
+    widget = MultiCheck()

@@ -5,10 +5,7 @@
 <div class="blank-margin"></div>
 <div class="container">
         <div class="col-md-3">
-            <img class="mini-img" src="../pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}" />
-            <hr class="featurette-divider">
             {{ wtf.quick_form(form, button_map={'delete':'danger'}) }}
-            <hr>
         </div>
 </div>
 {% endblock %}

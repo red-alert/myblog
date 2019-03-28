@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+<!-- START THE FEATURETTES -->
+<div class="container blank-margin"></div>
+<div class="container">
+<hr class="featurette-divider">
+
+{% include "main/_featurette_video.html" %}
+
+<nav arial-label="...">
+    <ul class="pager">
+        {% if page_start!=1 %}
+        <li>
+            <a href="{{ url_list[0] }}">|<-</a>
+        </li>
+        <li>  ...  </li>
+        {% endif %}
+        {% for page in range(page_start,page_end+1) %}
+        <li class="{% if current_page==(page) %}disabled{% endif %}">
+            <a href="{{ url_list[page-1] }}">{{ page }}
+            </a>
+        </li>
+        {% endfor %}
+        {% if page_end!=total_page %}
+        <li>  ...  </li>
+        <li>
+            <a href="{{ url_list[total_page-1] }}">->|</a>
+        </li>
+        {% endif %}
+    </ul>
+
+</nav></div>
+<!-- /END THE FEATURETTES -->
+
+
+{% endblock %}
