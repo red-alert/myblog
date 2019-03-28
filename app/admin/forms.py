@@ -37,7 +37,7 @@ class FileInput(object):
     def __call__(self, field, **kwargs):
         kwargs.setdefault('id', field.id)
         html = [u'']
-        html.append('<input name="%s" type="file", multiple="multiple">' % field.name)
+        html.append('<input name="%s" type="file" multiple="multiple">' % field.name)
         return u''.join(html)
 
 class MultipleFileField(FileField):

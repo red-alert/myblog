@@ -108,8 +108,8 @@ def videos():
     vs = Video.objects()
     page = request.args.get('page', 1, type=int)
     paginated_videos = vs.paginate(page=page, per_page=current_app.config['PIC_PER_PAGE'])
-    current_page = paginated_pictures.page
-    total_page = paginated_pictures.pages
+    current_page = paginated_videos.page
+    total_page = paginated_videos.pages
 
     page_start = 1
     page_end = 5
@@ -130,7 +130,7 @@ def videos():
         url = url_for('main.videos', page=p)
         url_list.append(url)
     return render_template('main/videos.html',
-                           pictures=paginated_videos.items,
+                           videos=paginated_videos.items,
                            current_page=current_page,
                            total_page=total_page,
                            page_start=page_start,
@@ -141,9 +141,9 @@ def videos():
 def galleries():
     gs = Gallery.objects()
     page = request.args.get('page', 1, type=int)
-    paginated_videos = vs.paginate(page=page, per_page=current_app.config['PIC_PER_PAGE'])
-    current_page = paginated_pictures.page
-    total_page = paginated_pictures.pages
+    paginated_galleries = gs.paginate(page=page, per_page=current_app.config['PIC_PER_PAGE'])
+    current_page = paginated_galleries.page
+    total_page = paginated_galleries.pages
 
     page_start = 1
     page_end = 5
@@ -161,10 +161,10 @@ def galleries():
 
     url_list = []
     for p in range(1, total_page+1): # so page number start from 1
-        url = url_for('main.gallies', page=p)
+        url = url_for('main.galleries', page=p)
         url_list.append(url)
     return render_template('main/galleries.html',
-                           pictures=paginated_galleries.items,
+                           galleries=paginated_galleries.items,
                            current_page=current_page,
                            total_page=total_page,
                            page_start=page_start,

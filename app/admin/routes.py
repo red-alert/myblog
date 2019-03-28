@@ -81,17 +81,17 @@ def edit_picture(id):
 def add_gallery():
     form = GalleryForm()
     if form.validate_on_submit():
-        if form.photos:
+        if request.files.getlist('photos'):
             ps = []
-            for file in form.photos:
-                if file and allowed_file(file.data.filename):
-                    filename = secure_filename(file.data.filename)
+            for file in request.files.getlist('photos'):
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
                     extension = filename.rsplit('.', 1)[1].lower()
                     photo = Photo(extension=extension)
                     photo.save()
                     ps.append(photo)
-                    unified_filename = str(picture.id) + '.' + extension
-                    f = file.data
+                    unified_filename = str(photo.id) + '.' + extension
+                    f = file
                     try:
                         picture_handler(f, unified_filename)
                     except:
@@ -100,32 +100,37 @@ def add_gallery():
             gallery = Gallery(name = form.name.data, description=form.description.data, photos=ps)
             gallery.save()
             return redirect(url_for('main.galleries'))
-    return render_template('admin/create_gallery.html', title='Create Gallery', form=form)
+    return render_template('admin/add_gallery.html', title='Create Gallery', form=form)
 
 @bp.route('/edit_gallery/<id>', methods=['GET', 'POST'])
 @login_required
 def edit_gallery(id):
-    gallery = Galley.objects.get(id=id)
+    gallery = Gallery.objects.get(id=id)
     form = GalleryForm(name=gallery.name, description=gallery.description)
     if form.validate_on_submit():
-        if form.files:
-            ps = []
-            for file in form.files:
-                if file and allowed_file(file.data.filename):
-                    filename = secure_filename(file.data.filename)
+        if request.files.getlist('photos'):
+            ps = gallery.photos
+            for file in request.files.getlist('photos'):
+                print(dir(file))
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
                     extension = filename.rsplit('.', 1)[1].lower()
                     photo = Photo(extension=extension)
                     photo.save()
                     ps.append(photo)
-                    unified_filename = str(picture.id) + '.' + extension
-                    f = file.data
+                    unified_filename = str(photo.id) + '.' + extension
+                    f = file
                     try:
                         picture_handler(f, unified_filename)
                     except:
                         print("picture file may not be updated")
                     flash('New picture uploaded!')
-                    return redirect(url_for('admin.edit_galleries'))
-    return render_template('admin/create_gallery.html', title='Create Gallery', form=form)
+            gallery.photos = ps
+        gallery.name = form.name.data
+        gallery.description = form.description.data
+        gallery.save()
+        return redirect(url_for('main.galleries'))
+    return render_template('admin/add_gallery.html', title='Create Gallery', form=form)
 
 @bp.route('/delete_from_gallery/<id>', methods=['GET','POST'])
 @login_required
@@ -147,7 +152,7 @@ def delete_from_gallery(id):
                 print("image file removing unsuccessully, try manual")
             p_obj.delete()
         return redirect(url_for('admin.edit_galleries'))
-    return render_template('admin/delete_from_gallery.html')
+    return render_template('admin/delete_from_gallery.html', form=form)
 
 @bp.route('/add_video', methods=['GET', 'POST'])
 @login_required
@@ -157,7 +162,7 @@ def add_video():
         video = Video(description=form.description.data, url=form.url.data)
         video.save()
         return redirect(url_for('main.videos'))
-    return render_template('admin/add_video.html')
+    return render_template('admin/add_video.html', form=form)
 
 @bp.route('/edit_video/<id>', methods=['GET', 'POST'])
 @login_required
@@ -172,4 +177,4 @@ def edit_video(id):
         video.url = form.url.data
         video.save()
         return redirect(url_for('main.videos'))
-    return render_template('admin/edit_video.html')
+    return render_template('admin/edit_video.html', form=form)
