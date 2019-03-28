@@ -76,14 +76,14 @@ def edit_picture(id):
         return redirect(url_for('admin.edit_pictures'))
     return render_template('admin/edit_picture.html', form=form, picture=picture)
 
-@bp.route('/create_gallery', method=['GET', 'POST'])
+@bp.route('/add_gallery', methods=['GET', 'POST'])
 @login_required
-def create_gallery():
+def add_gallery():
     form = GalleryForm()
     if form.validate_on_submit():
-        if form.files:
+        if form.photos:
             ps = []
-            for file in form.files:
+            for file in form.photos:
                 if file and allowed_file(file.data.filename):
                     filename = secure_filename(file.data.filename)
                     extension = filename.rsplit('.', 1)[1].lower()
@@ -102,7 +102,7 @@ def create_gallery():
             return redirect(url_for('main.galleries'))
     return render_template('admin/create_gallery.html', title='Create Gallery', form=form)
 
-@bp.route('/edit_gallery/<id>', method=['GET', 'POST'])
+@bp.route('/edit_gallery/<id>', methods=['GET', 'POST'])
 @login_required
 def edit_gallery(id):
     gallery = Galley.objects.get(id=id)
@@ -127,7 +127,7 @@ def edit_gallery(id):
                     return redirect(url_for('admin.edit_galleries'))
     return render_template('admin/create_gallery.html', title='Create Gallery', form=form)
 
-@bp.route('/delete_from_gallery/<id>', method=['GET','POST'])
+@bp.route('/delete_from_gallery/<id>', methods=['GET','POST'])
 @login_required
 def delete_from_gallery(id):
     gallery = Gallery.objects.get(id=id)
