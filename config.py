@@ -29,6 +29,6 @@ class Config(object):
     STATIC = 'app/static'
 
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-    MAX_CONTENT_LENGTH = 16*1024*1024
+    MAX_CONTENT_LENGTH = 100*1024*1024
 
     PIC_PER_PAGE = 10

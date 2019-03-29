@@ -138,21 +138,39 @@ def delete_from_gallery(id):
     gallery = Gallery.objects.get(id=id)
     form = DeletePhotoForm()
     choices = []
-    for photos in gallery:
+    g_photos = gallery.photos
+    for photo in g_photos:
         choice = (str(photo.id), '.'.join([str(photo.id), str(photo.extension)]))
         choices.append(choice)
     form.photos.choices = choices
     if form.validate_on_submit():
-        photos = form.photos.data
+        photos = request.form.getlist('photos')
         for photo in photos:
             p_obj = Photo(id=photo)
             try:
                 picture_remover(p_obj)
             except:
                 print("image file removing unsuccessully, try manual")
+            g_photos.remove(p_obj)
             p_obj.delete()
-        return redirect(url_for('admin.edit_galleries'))
+        gallery.photos = g_photos
+        gallery.save()
+        return redirect(url_for('main.galleries'))
     return render_template('admin/delete_from_gallery.html', form=form)
+
+@bp.route('/delete_gallery/<id>', methods=['GET', 'POST'])
+@login_required
+def delete_gallery(id):
+    gallery = Gallery.objects.get(id=id)
+    photos = gallery.photos
+    for p in photos:
+        try:
+            picture_remover(p)
+        except:
+            print("image file removing unsuccessully, try manual")
+        p.delete()
+    gallery.delete()
+    return redirect(url_for('main.galleries'))
 
 @bp.route('/add_video', methods=['GET', 'POST'])
 @login_required

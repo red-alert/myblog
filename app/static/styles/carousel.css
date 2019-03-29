@@ -103,6 +103,12 @@ body {
   float: left;
 }
 
+.gal-description::first-letter {
+  font-size: 3em;
+  margin-bottom: 4px;
+  margin-right: 8px;
+  float: left;
+}
 /* .footer {
   margin-bottom: 0px;
   height:80px;

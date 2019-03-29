@@ -18,11 +18,11 @@ class MultiCheck(object):
         field_id = kwargs.pop('id', field.id)
         html = [u'']
         html.append(u'<table>')
-
-        for value, label in field.iter_choices():
+        print(field.iter_choices())
+        for value, label, _ in field.iter_choices():
             html.append(u'<tr>\n')
             html.append(u'<td><input type="checkbox" name="%s" value="%s"/></td>\n' % (field_id, value))
-            html.append(u'<td><img class="mini-img" src="../static/pictures/thumbnail/%s" /></td></tr>\n' % label )
+            html.append(u'<td><img class="mini-img" src="../../static/pictures/thumbnail/%s" /></td></tr>\n' % label )
         html.append(u'</table>\n')
         return u''.join(html)
 
@@ -67,7 +67,7 @@ class GalleryForm(FlaskForm):
     submit = SubmitField('upload')
 
 class DeletePhotoForm(FlaskForm):
-    photos = SelectMultipleField('photos')
+    photos = MultiPicField('photos')
     delete = SubmitField('Delete')
 
 class VideoForm(FlaskForm):
