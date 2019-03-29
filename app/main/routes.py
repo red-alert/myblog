@@ -38,18 +38,12 @@ def index():
             page_start = total_page - 4
             page_end = total_page
 
-    next_url = url_for('main.index', page=paginated_pictures.next_num) \
-                        if paginated_pictures.has_next else None
-    prev_url = url_for('main.index', page=paginated_pictures.prev_num) \
-                        if paginated_pictures.has_prev else None
     url_list = []
     for p in range(1, total_page+1): # so page number start from 1
         url = url_for('main.index', page=p)
         url_list.append(url)
     return render_template('main/index.html',
                            pictures=paginated_pictures.items,
-                           next_url=next_url,
-                           prev_url=prev_url,
                            carousel_pictures=carousel_pictures,
                            current_page=current_page,
                            total_page=total_page,
