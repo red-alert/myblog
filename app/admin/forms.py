@@ -22,7 +22,7 @@ class MultiCheck(object):
         for value, label, _ in field.iter_choices():
             html.append(u'<tr>\n')
             html.append(u'<td><input type="checkbox" name="%s" value="%s"/></td>\n' % (field_id, value))
-            html.append(u'<td><img class="mini-img" src="../../static/pictures/thumbnail/%s" /></td></tr>\n' % label )
+            html.append(u'<td><img class="mini-img-static" src="../../static/pictures/thumbnail/%s" /></td></tr>\n' % label )
         html.append(u'</table>\n')
         return u''.join(html)
 

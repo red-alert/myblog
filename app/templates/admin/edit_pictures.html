@@ -2,14 +2,18 @@
 
 {% block styles %}
     {{ super() }}
-        <link href="../static/styles/flip.css" rel="stylesheet">
+        <link href="{{ url_for('static', filename='styles/flip.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block app_content %}
     <div class="container blank-margin"></div>
     <div class="container">
-        {% for picture in pictures %}
-                <a href="{{ url_for('admin.edit_picture', id=picture.id )}}"><img class="mini-img" src="../static/pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}"></a>
-        {% endfor %}
+        <div class="row">
+            <div class="col-md-12">
+                {% for picture in pictures %}
+                        <a href="{{ url_for('admin.edit_picture', id=picture.id )}}"><img class="mini-img-static" src="../static/pictures/thumbnail/{{ picture.id }}.{{ picture.extension }}"></a>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 {% endblock %}

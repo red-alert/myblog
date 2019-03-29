@@ -3,12 +3,11 @@
 
 {% block styles %}
     {{ super() }}
-        <link href="../../static/styles/flip.css" rel="stylesheet">
+        <link href="{{ url_for('static', filename='styles/flip.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block app_content %}
-    <div class="container blank-margin">
-    </div>
+    <div class="container blank-margin"></div>
     <div class="container">
         <h1>从影集中删除相片</h1>
         <div class="row">
