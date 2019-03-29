@@ -52,6 +52,7 @@ Temporary Items
 venv/
 __pycache__/
 app/__pycache__/
+app/static/pictures/
 .env
 *.wsgi
 
