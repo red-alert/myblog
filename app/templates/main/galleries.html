@@ -2,7 +2,7 @@
 
 {% block styles %}
     {{ super() }}
-        <link href="../static/styles/flip.css" rel="stylesheet">
+        <link href="{{ url_for('static', filename='styles/flip.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block app_content %}
