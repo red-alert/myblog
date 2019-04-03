@@ -1,4 +1,4 @@
-import os
+import os, random
 
 from collections import defaultdict
 
@@ -17,7 +17,11 @@ def index():
     10 photos ordered by shot time per page
     """
     pictures = Picture.objects().order_by('-shot_time')
-    carousel_pictures = pictures.order_by('-create_time')[:5]
+    l = len(pictures)
+    if l>10:
+        carousel_pictures = random.sample(list(pictures), 10)
+    else:
+        carousel_pictures = random.sample(list(pictures), l)
     page = request.args.get('page', 1, type=int)
     paginated_pictures = pictures.paginate(page=page,
                                            per_page=current_app.config['PIC_PER_PAGE'])
@@ -57,9 +61,7 @@ def about():
     about page
     a static page shows info about the site
     """
-    pictures = Picture.objects()
-    carousel_pictures = pictures.order_by('-create_time')[:5]
-    return render_template('main/about.html', carousel_pictures=carousel_pictures)
+    return render_template('main/about.html')
 
 @bp.route('/pictures_by_year')
 def pictures_by_year():
