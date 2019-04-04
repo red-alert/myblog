@@ -17,12 +17,65 @@ var scrollBanner = function() {
     });
 };
 
+var scrollPic = function() {
+    sTop = $(this).scrollTop();
+    sHgt = $window.height();
+    sPics = $sPics
+
+    sPics.each(function (){
+        sPic = $(this)
+        sPic.css({
+          'object-fit': "cover",
+        })
+        xImg = $(this).children("img");
+        xHgt = $(this).height();
+        xTop = $(this).offset().top;
+
+        if (xTop > (sTop+sHgt)) {
+            xImg.css({
+              'position' : "relative",
+              'top': 0 + "px",
+            });
+        };
+
+        if ( xTop <= (sTop + sHgt) && xTop > (sTop+sHgt-xHgt) ) {
+            xImg.css({
+              'position' : "relative",
+              'top': - (xHgt - (sTop + sHgt - xTop))  + "px",
+            });
+        };
+
+        if (xTop <= (sTop+sHgt-xHgt) && xTop > sTop ) {
+            xImg.css({
+              'position' : "relative",
+              'top': 0 + "px",
+            });
+        };
+
+        if (xTop <= sTop && xTop > (sTop-xHgt) ) {
+            xImg.css({
+              'position' : "relative",
+              'top': + (sTop - xTop)  + "px",
+            });
+        };
+
+        if (xTop <= (xTop-xHgt)) {
+            xImg.css({
+              'position' : "relative",
+              'top': 0 + "px",
+            });
+        };
+    })
+};
+
 function parallax(func) {
-    $window=$(window)
-    $homeBanner=$('.homeBanner')
-    $bannerText=$('.bannerText')
+    $window=$(window);
+    $homeBanner=$('.homeBanner');
+    $bannerText=$('.bannerText');
+    $sPics=$('.sPic');
     $window.scroll(function () {
         scrollBanner();
+        scrollPic();
     })};
 
-addLoadEvent(parallax)
+addLoadEvent(parallax);

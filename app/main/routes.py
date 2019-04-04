@@ -18,8 +18,8 @@ def index():
     """
     pictures = Picture.objects().order_by('-shot_time')
     l = len(pictures)
-    if l>10:
-        carousel_pictures = random.sample(list(pictures), 10)
+    if l>5 :
+        carousel_pictures = random.sample(list(pictures), 5)
     else:
         carousel_pictures = random.sample(list(pictures), l)
     page = request.args.get('page', 1, type=int)
