@@ -41,7 +41,7 @@ var scrollPic = function() {
         if ( xTop <= (sTop + sHgt) && xTop > (sTop+sHgt-xHgt) ) {
             xImg.css({
               'position' : "relative",
-              'top': - (xHgt - (sTop + sHgt - xTop))  + "px",
+              'top': - (xHgt - (sTop + sHgt - xTop))/2  + "px",
             });
         };
 
@@ -55,7 +55,7 @@ var scrollPic = function() {
         if (xTop <= sTop && xTop > (sTop-xHgt) ) {
             xImg.css({
               'position' : "relative",
-              'top': + (sTop - xTop)  + "px",
+              'top': + (sTop - xTop)/2  + "px",
             });
         };
 
