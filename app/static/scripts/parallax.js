@@ -34,7 +34,7 @@ var scrollPic = function() {
         if (xTop > (sTop+sHgt)) {
             xImg.css({
               'position' : "relative",
-              'top': 0 + "px",
+              'top': - xHgt/2 + "px",
             });
         };
 
